@@ -7,7 +7,6 @@ import {
 } from "winston";
 
 import { Config } from "../config";
-import { LogLevel } from "./types/log-level";
 
 class Logger implements LoggerService {
     private delegate: WinstonLogger;
@@ -61,4 +60,4 @@ class Logger implements LoggerService {
     });
 }
 
-export { Logger, LogLevel };
+export { Logger };
