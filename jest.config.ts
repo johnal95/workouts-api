@@ -1,5 +1,7 @@
 import { Config } from "jest";
 
+process.env.LOG_LEVEL = "silent";
+
 const config: Config = {
     rootDir: "test",
     preset: "ts-jest",

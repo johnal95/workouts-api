@@ -12,7 +12,8 @@ class Config {
         return process.env.LOG_LEVEL === "debug" ||
             process.env.LOG_LEVEL === "info" ||
             process.env.LOG_LEVEL === "warn" ||
-            process.env.LOG_LEVEL === "error"
+            process.env.LOG_LEVEL === "error" ||
+            process.env.LOG_LEVEL === "silent"
             ? process.env.LOG_LEVEL
             : "debug";
     }
