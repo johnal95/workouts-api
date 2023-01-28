@@ -17,11 +17,11 @@ const inMemoryWorkouts: Record<string, WorkoutEntity> = {
 
 @Injectable()
 class WorkoutsRepository {
-    getWorkouts(): WorkoutEntity[] {
+    findAll(): WorkoutEntity[] {
         return Object.values(inMemoryWorkouts);
     }
 
-    getWorkoutById(id: string): WorkoutEntity | null {
+    findById(id: string): WorkoutEntity | null {
         return inMemoryWorkouts[id] ?? null;
     }
 }

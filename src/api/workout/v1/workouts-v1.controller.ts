@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Param } from "@nestjs/common";
 
 import { WorkoutV1Dto } from "../types/workout-v1.dto";
 import { WorkoutsV1Service } from "./workouts-v1.service";
@@ -12,6 +12,11 @@ class WorkoutsV1Controller {
     @Get()
     getWorkouts(): WorkoutV1Dto[] {
         return this.service.getWorkouts();
+    }
+
+    @Get(":id")
+    getWorkout(@Param("id") id: string): WorkoutV1Dto {
+        return this.service.getWorkout(id);
     }
 }
 
