@@ -16,11 +16,10 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "start": "node dist/main",
+    "dev": "nest start --watch --exec \"node --require ./scripts/development-setup\"",
+    "dev:debug": "npm run start -- --debug",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
     "lint": "eslint .",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -43,6 +42,7 @@
     "@types/supertest": "2.0.12",
     "@typescript-eslint/eslint-plugin": "5.49.0",
     "@typescript-eslint/parser": "5.49.0",
+    "dotenv": "16.0.3",
     "eslint": "8.32.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-prettier": "4.2.1",
