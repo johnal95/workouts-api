@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
-import { WorkoutEntity } from "../types/workout.entity";
+import { WorkoutEntity } from "./types/workout.entity";
 
 const inMemoryWorkouts: Record<string, WorkoutEntity> = {
     "workout-1": {

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
+import { WorkoutEntity } from "../../../repository/types/workout.entity";
 import { WorkoutV1Dto } from "../types/workout-v1.dto";
-import { WorkoutEntity } from "../types/workout.entity";
 
 @Injectable()
 class WorkoutsV1Mapper {

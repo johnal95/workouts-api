@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
-import { WorkoutsRepository } from "../common/workouts.repository";
+import { WorkoutsRepository } from "../../../repository/workouts.repository";
 import { WorkoutNotFoundException } from "../exceptions/workout-not-found-exception";
 import { WorkoutV1Dto } from "../types/workout-v1.dto";
 import { WorkoutsV1Mapper } from "./workouts-v1.mapper";
