@@ -1,0 +1,34 @@
+{
+  "env": { "es2022": true, "node": true },
+  "overrides": [
+    /**
+     * TYPESCRIPT CODE
+     */
+    {
+      "files": ["{src,test}/**/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": { "project": "tsconfig.eslint.json" },
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:@typescript-eslint/strict"
+      ],
+      "plugins": ["@typescript-eslint"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-extraneous-class": "off",
+        "no-console": "error"
+      }
+    },
+    /**
+     * TYPESCRIPT TEST CODE
+     */
+    {
+      "files": ["test/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "warn"
+      }
+    }
+  ]
+}
