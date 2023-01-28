@@ -1,7 +1,7 @@
 import { INestApplication } from "@nestjs/common";
 import * as request from "supertest";
 
-import { WorkoutV1Dto } from "../../src/api/workout/types/workout-v1.dto";
+import { WorkoutV1Dto } from "../../src/api/workouts/types/workout-v1.dto";
 import { setupApp } from "../utilities/setup-app";
 
 describe("GET /api/v1/workouts", () => {

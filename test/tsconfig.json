@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "references": [
     {
-      "name": "workout-api",
+      "name": "workouts-api",
       "path": ".."
     }
   ],

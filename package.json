@@ -1,5 +1,5 @@
 {
-  "name": "workout-api",
+  "name": "workouts-api",
   "version": "1.0.0",
   "description": "",
   "author": "Joao A G Lopes",
@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JohnAL95/workout-api.git"
+    "url": "git+https://github.com/JohnAL95/workouts-api.git"
   },
   "volta": {
     "node": "18.13.0",

@@ -1,1 +1,1 @@
-# Workout API
+# Workouts API
