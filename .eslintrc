@@ -25,6 +25,7 @@
         "import/imports-first": "error",
         "import/no-cycle": "error",
         "import/no-default-export": "error",
+        "import/no-extraneous-dependencies": "error",
         "no-console": "error"
       }
     },

@@ -28,6 +28,8 @@
     "@nestjs/common": "9.2.1",
     "@nestjs/core": "9.2.1",
     "@nestjs/platform-express": "9.2.1",
+    "express": "*",
+    "http-status-codes": "2.2.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "4.1.2",
     "rxjs": "7.8.0"
@@ -36,7 +38,7 @@
     "@nestjs/cli": "9.1.9",
     "@nestjs/schematics": "9.0.4",
     "@nestjs/testing": "9.2.1",
-    "@types/express": "4.17.16",
+    "@types/express": "*",
     "@types/jest": "29.4.0",
     "@types/node": "18.11.18",
     "@types/supertest": "2.0.12",
