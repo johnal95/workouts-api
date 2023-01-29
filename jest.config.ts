@@ -1,8 +1,8 @@
-import { Config } from "jest";
+import { JestConfigWithTsJest } from "ts-jest";
 
 process.env.LOG_LEVEL = "silent";
 
-const config: Config = {
+const config: JestConfigWithTsJest = {
     transform: {
         "^.+\\.[tj]s$": ["ts-jest", { tsconfig: "test/tsconfig.json" }],
     },
