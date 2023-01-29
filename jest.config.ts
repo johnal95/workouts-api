@@ -9,7 +9,7 @@ const config: JestConfigWithTsJest = {
     testRegex: ".*\\.test\\.ts$",
     testEnvironment: "node",
     collectCoverageFrom: ["src/**/*.ts"],
-    coverageDirectory: "../coverage",
+    coverageDirectory: "coverage",
 };
 
 export default config;
