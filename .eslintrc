@@ -30,6 +30,15 @@
       }
     },
     /**
+     * TYPESCRIPT DTO FILES
+     */
+    {
+      "files": ["src/**/*.dto.ts"],
+      "rules": {
+        "@typescript-eslint/no-empty-function": "off"
+      }
+    },
+    /**
      * TYPESCRIPT TEST CODE
      */
     {
