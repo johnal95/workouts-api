@@ -1,16 +1,20 @@
 import { INestApplication } from "@nestjs/common";
+import { TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 
-import { ErrorResponse } from "../../src/exceptions/error-response";
 import { WorkoutV1Dto } from "../../src/api/workouts/types/workout-v1.dto";
-
-import { setupApp } from "../utilities/setup-app";
+import { ErrorResponse } from "../../src/exceptions/error-response";
+import { WorkoutsRepository } from "../../src/repository/workouts.repository";
+import { setupTestContext } from "../utilities/setup-test-context";
 
 describe("GET /api/v1/workouts/:id", () => {
     let app: INestApplication;
+    let moduleFixture: TestingModule;
 
     beforeEach(async () => {
-        app = await setupApp();
+        const context = await setupTestContext();
+        app = context.app;
+        moduleFixture = context.moduleFixture;
     });
 
     it("should get existing workout", async () => {
@@ -37,6 +41,23 @@ describe("GET /api/v1/workouts/:id", () => {
             statusCode: 404,
             error: "Not Found",
             message: "Workout not found",
+            timestamp: expect.any(String),
+        });
+    });
+
+    it("should respond with relevant error when workout fails to be retrieved", async () => {
+        const repository = moduleFixture.get<WorkoutsRepository>(WorkoutsRepository);
+        jest.spyOn(repository, "findById").mockImplementation(() => {
+            throw new Error("findById failed");
+        });
+
+        const response = await request(app.getHttpServer()).get("/api/v1/workouts/workout-1");
+
+        expect(response.status).toBe(500);
+        expect(response.body).toEqual<ErrorResponse>({
+            statusCode: 500,
+            error: "Internal Server Error",
+            message: "An error [Error] occurred while handling the request: findById failed",
             timestamp: expect.any(String),
         });
     });

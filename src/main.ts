@@ -4,6 +4,7 @@ import { ExpressAdapter } from "@nestjs/platform-express";
 import { AppModule } from "./app.module";
 import { Config } from "./config";
 import { HttpExceptionFilter } from "./exceptions/http-exception-filter";
+import { UnhandledExceptionFilter } from "./exceptions/unhandled-exception-filter";
 import { Logger } from "./logging/logger";
 
 const logger = new Logger("Server");
@@ -11,7 +12,7 @@ const logger = new Logger("Server");
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, new ExpressAdapter(), { logger: false });
 
-    app.useGlobalFilters(new HttpExceptionFilter());
+    app.useGlobalFilters(new UnhandledExceptionFilter(), new HttpExceptionFilter());
 
     await app.listen(Config.PORT);
 }
