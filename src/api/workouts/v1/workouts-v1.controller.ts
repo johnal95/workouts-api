@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from "@nestjs/common";
-import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { ReasonPhrases } from "http-status-codes";
+import { ApiOperation, ApiNotFoundResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
 
+import { ErrorResponse } from "../../../exceptions/error-response.dto";
 import { WorkoutV1Dto } from "../dto/workout-v1.dto";
 import { WorkoutsV1Service } from "./workouts-v1.service";
 
@@ -22,7 +22,7 @@ class WorkoutsV1Controller {
     @Get(":id")
     @ApiOperation({ summary: "Retrieve workout by ID" })
     @ApiResponse({ status: 200, type: WorkoutV1Dto })
-    @ApiResponse({ status: 404, description: ReasonPhrases.NOT_FOUND })
+    @ApiNotFoundResponse({ type: ErrorResponse })
     getWorkout(@Param("id") id: string): WorkoutV1Dto {
         return this.service.getWorkout(id);
     }

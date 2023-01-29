@@ -1,11 +1,6 @@
 import { getReasonPhrase } from "http-status-codes";
 
-interface ErrorResponse {
-    readonly statusCode: number;
-    readonly error: string;
-    readonly message: string;
-    readonly timestamp: string;
-}
+import { ErrorResponse } from "./error-response.dto";
 
 const buildErrorResponse = (
     statusCode: number,
@@ -18,4 +13,4 @@ const buildErrorResponse = (
     timestamp,
 });
 
-export { ErrorResponse, buildErrorResponse };
+export { buildErrorResponse };

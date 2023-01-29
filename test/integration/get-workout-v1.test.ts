@@ -3,7 +3,7 @@ import { TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 
 import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
-import { ErrorResponse } from "../../src/exceptions/error-response";
+import { ErrorResponse } from "../../src/exceptions/error-response.dto";
 import { WorkoutsRepository } from "../../src/repository/workouts.repository";
 import { setupTestContext } from "../utilities/setup-test-context";
 
