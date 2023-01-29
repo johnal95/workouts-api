@@ -19,9 +19,7 @@ class WorkoutsV1Service {
         this.logger.log("Retrieving all workouts");
         const workoutEntities = this.repository.findAll();
 
-        const workouts = workoutEntities.map((workoutEntity) =>
-            this.mapper.toWorkoutV1Dto(workoutEntity),
-        );
+        const workouts = this.mapper.toWorkoutV1DtoList(workoutEntities);
 
         return workouts;
     }
