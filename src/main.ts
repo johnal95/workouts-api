@@ -2,7 +2,7 @@ import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
 
 import { AppModule } from "./app.module";
-import { Config } from "./config";
+import { Config } from "./config/config";
 import { HttpExceptionFilter } from "./exceptions/http-exception-filter";
 import { UnhandledExceptionFilter } from "./exceptions/unhandled-exception-filter";
 import { Logger } from "./logging/logger";

@@ -6,7 +6,7 @@ import {
     transports as winstonTransports,
 } from "winston";
 
-import { Config } from "../config";
+import { Config } from "../config/config";
 
 class Logger implements LoggerService {
     private delegate: WinstonLogger;
