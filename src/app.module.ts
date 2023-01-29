@@ -1,7 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 
 import { ApiModule } from "./api/api.module";
-import { AccessLogger } from "./logging/logger-middleware";
+import { AccessLogger } from "./logging/access-logger";
 
 @Module({
     imports: [ApiModule],
