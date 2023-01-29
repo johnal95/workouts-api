@@ -3,11 +3,12 @@ import { Config } from "jest";
 process.env.LOG_LEVEL = "silent";
 
 const config: Config = {
-    rootDir: "test",
-    preset: "ts-jest",
+    transform: {
+        "^.+\\.[tj]s$": ["ts-jest", { tsconfig: "test/tsconfig.json" }],
+    },
     testRegex: ".*\\.test\\.ts$",
     testEnvironment: "node",
-    collectCoverageFrom: ["**/*.ts"],
+    collectCoverageFrom: ["src/**/*.ts"],
     coverageDirectory: "../coverage",
 };
 
