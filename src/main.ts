@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+import { ExpressAdapter } from "@nestjs/platform-express";
 
 import { AppModule } from "./app.module";
 import { Config } from "./config";
@@ -8,7 +9,7 @@ import { Logger } from "./logging/logger";
 const logger = new Logger("Server");
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule, { logger: false });
+    const app = await NestFactory.create(AppModule, new ExpressAdapter(), { logger: false });
 
     app.useGlobalFilters(new HttpExceptionFilter());
 
@@ -20,6 +21,6 @@ bootstrap()
         logger.log(`Server listening on port ${Config.PORT}`);
     })
     .catch((err: unknown) => {
-        logger.error("An error occurred starting the server", err);
+        logger.error("An error occurred starting the server:", err);
         throw err;
     });
