@@ -16,7 +16,7 @@ class AccessLogger implements NestMiddleware {
             requestProtocol: `HTTP/${req.httpVersion}`,
         };
 
-        req.on("close", () => {
+        res.on("close", () => {
             const endTime = Date.now();
 
             const resMeta = {
