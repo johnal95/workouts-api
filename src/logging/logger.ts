@@ -21,11 +21,15 @@ class Logger implements LoggerService {
         });
     }
 
+    log(message: string, ...meta: unknown[]): void {
+        this.debug(message, ...meta);
+    }
+
     debug(message: string, ...meta: unknown[]): void {
         this.delegate.debug(message, ...meta);
     }
 
-    log(message: string, ...meta: unknown[]): void {
+    info(message: string, ...meta: unknown[]): void {
         this.delegate.info(message, ...meta);
     }
 

@@ -32,7 +32,7 @@ class AccessLogger implements NestMiddleware {
             } else if (String(resMeta.responseCode).startsWith("4")) {
                 this.logger.warn(message, { ...reqMeta, ...resMeta });
             } else {
-                this.logger.log(message, { ...reqMeta, ...resMeta });
+                this.logger.info(message, { ...reqMeta, ...resMeta });
             }
         });
 

@@ -30,7 +30,7 @@ async function bootstrap() {
 
 bootstrap()
     .then(() => {
-        logger.log(`Server listening on port ${Config.PORT}`);
+        logger.info(`Server listening on port ${Config.PORT}`);
     })
     .catch((err: unknown) => {
         logger.error("An error occurred starting the server:", err);
