@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { v4 as uuidv4 } from "uuid";
 
 import { WorkoutEntity } from "./types/workout.entity";
 
@@ -23,6 +24,18 @@ class WorkoutsRepository {
 
     findById(id: string): WorkoutEntity | null {
         return inMemoryWorkouts[id] ?? null;
+    }
+
+    save(workoutName: string): WorkoutEntity {
+        const workout: WorkoutEntity = {
+            id: uuidv4(),
+            name: workoutName,
+            createdAt: Date.now(),
+        };
+
+        inMemoryWorkouts[workout.id] = workout;
+
+        return workout;
     }
 }
 
