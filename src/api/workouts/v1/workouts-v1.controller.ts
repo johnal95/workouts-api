@@ -1,5 +1,11 @@
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";
-import { ApiOperation, ApiNotFoundResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
+import {
+    ApiOperation,
+    ApiNotFoundResponse,
+    ApiResponse,
+    ApiTags,
+    ApiBadRequestResponse,
+} from "@nestjs/swagger";
 
 import { ErrorResponseDto } from "../../../exceptions/error-response.dto";
 import { SchemaValidationPipe } from "../../../pipes/schema-validation.pipe";
@@ -33,6 +39,7 @@ class WorkoutsV1Controller {
     @Post()
     @ApiOperation({ summary: "Add new workout" })
     @ApiResponse({ status: 201, type: WorkoutV1Dto })
+    @ApiBadRequestResponse({ type: ErrorResponseDto })
     addNewWorkout(
         @Body(new SchemaValidationPipe(CreateWorkoutV1Schema)) workout: CreateWorkoutV1Dto,
     ): WorkoutV1Dto {
