@@ -3,14 +3,14 @@ import { Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import { buildErrorResponse } from "./build-error-response";
-import { ErrorResponse } from "./error-response.dto";
+import { ErrorResponseDto } from "./error-response.dto";
 
 @Catch()
 class UnhandledExceptionFilter implements ExceptionFilter {
     catch(exception: unknown, host: ArgumentsHost): void {
         const ctx = host.switchToHttp();
 
-        const res = ctx.getResponse<Response<ErrorResponse>>();
+        const res = ctx.getResponse<Response<ErrorResponseDto>>();
 
         const statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
 

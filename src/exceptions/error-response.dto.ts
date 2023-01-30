@@ -1,7 +1,7 @@
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { ApiProperty } from "@nestjs/swagger";
 
-class ErrorResponse {
+class ErrorResponseDto {
     @ApiProperty({ example: StatusCodes.BAD_REQUEST })
     readonly statusCode!: number;
 
@@ -17,4 +17,4 @@ class ErrorResponse {
     private constructor() {}
 }
 
-export { ErrorResponse };
+export { ErrorResponseDto };

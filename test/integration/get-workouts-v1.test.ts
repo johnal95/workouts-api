@@ -3,7 +3,7 @@ import { TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 
 import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
-import { ErrorResponse } from "../../src/exceptions/error-response.dto";
+import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { WorkoutsRepository } from "../../src/repository/workouts.repository";
 import { setupTestContext } from "../utilities/setup-test-context";
 
@@ -36,7 +36,7 @@ describe("GET /api/v1/workouts", () => {
         const response = await request(app.getHttpServer()).get("/api/v1/workouts");
 
         expect(response.status).toBe(500);
-        expect(response.body).toEqual<ErrorResponse>({
+        expect(response.body).toEqual<ErrorResponseDto>({
             statusCode: 500,
             error: "Internal Server Error",
             message: "An error [Error] occurred while handling the request: findAll failed",
