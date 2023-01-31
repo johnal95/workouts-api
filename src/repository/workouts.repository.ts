@@ -37,6 +37,12 @@ class WorkoutsRepository {
 
         return workout;
     }
+
+    update(workout: WorkoutEntity): WorkoutEntity {
+        inMemoryWorkouts[workout.id] = workout;
+
+        return workout;
+    }
 }
 
 export { WorkoutsRepository };
