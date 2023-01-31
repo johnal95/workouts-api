@@ -49,7 +49,7 @@ class WorkoutsV1Controller {
     }
 
     @Put(":id")
-    @ApiOperation({ summary: "Update workout" })
+    @ApiOperation({ summary: "Update workout by ID" })
     @ApiResponse({ status: 200, type: WorkoutV1Dto })
     @ApiBadRequestResponse({ type: ErrorResponseDto })
     updateWorkout(
