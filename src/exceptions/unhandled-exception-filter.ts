@@ -1,6 +1,5 @@
-import { ArgumentsHost, Catch, ExceptionFilter } from "@nestjs/common";
+import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from "@nestjs/common";
 import { Response } from "express";
-import { StatusCodes } from "http-status-codes";
 
 import { buildErrorResponse } from "./build-error-response";
 import { ErrorResponseDto } from "./error-response.dto";
@@ -12,7 +11,7 @@ class UnhandledExceptionFilter implements ExceptionFilter {
 
         const res = ctx.getResponse<Response<ErrorResponseDto>>();
 
-        const statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
+        const statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 
         const errorName = exception instanceof Error ? exception.name : "unknown";
 

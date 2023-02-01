@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Param,
+    Post,
+    Put,
+} from "@nestjs/common";
 import {
     ApiOperation,
     ApiNotFoundResponse,
@@ -25,14 +35,14 @@ class WorkoutsV1Controller {
 
     @Get()
     @ApiOperation({ summary: "Retrieve all workouts" })
-    @ApiResponse({ status: 200, type: [WorkoutV1Dto] })
+    @ApiResponse({ status: HttpStatus.OK, type: [WorkoutV1Dto] })
     getWorkouts(): WorkoutV1Dto[] {
         return this.service.getWorkouts();
     }
 
     @Get(":id")
     @ApiOperation({ summary: "Retrieve workout by ID" })
-    @ApiResponse({ status: 200, type: WorkoutV1Dto })
+    @ApiResponse({ status: HttpStatus.OK, type: WorkoutV1Dto })
     @ApiNotFoundResponse({ type: ErrorResponseDto })
     getWorkout(@Param("id") id: string): WorkoutV1Dto {
         return this.service.getWorkout(id);
@@ -40,7 +50,7 @@ class WorkoutsV1Controller {
 
     @Post()
     @ApiOperation({ summary: "Add new workout" })
-    @ApiResponse({ status: 201, type: WorkoutV1Dto })
+    @ApiResponse({ status: HttpStatus.CREATED, type: WorkoutV1Dto })
     @ApiBadRequestResponse({ type: ErrorResponseDto })
     addNewWorkout(
         @Body(new SchemaValidationPipe(CreateWorkoutV1Schema)) workout: CreateWorkoutV1Dto,
@@ -50,7 +60,7 @@ class WorkoutsV1Controller {
 
     @Put(":id")
     @ApiOperation({ summary: "Update workout by ID" })
-    @ApiResponse({ status: 200, type: WorkoutV1Dto })
+    @ApiResponse({ status: HttpStatus.OK, type: WorkoutV1Dto })
     @ApiBadRequestResponse({ type: ErrorResponseDto })
     updateWorkout(
         @Param("id") id: string,
@@ -60,9 +70,9 @@ class WorkoutsV1Controller {
     }
 
     @Delete(":id")
-    @HttpCode(204)
+    @HttpCode(HttpStatus.NO_CONTENT)
     @ApiOperation({ summary: "Delete workout by ID" })
-    @ApiResponse({ status: 204 })
+    @ApiResponse({ status: HttpStatus.NO_CONTENT })
     @ApiBadRequestResponse({ type: ErrorResponseDto })
     deleteWorkout(@Param("id") id: string): void {
         this.service.deleteWorkout(id);
