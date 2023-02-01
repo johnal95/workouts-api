@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from "@nestjs/common";
 import {
     ApiOperation,
     ApiNotFoundResponse,
@@ -57,6 +57,15 @@ class WorkoutsV1Controller {
         @Body(new SchemaValidationPipe(UpdateWorkoutV1Schema)) workout: UpdateWorkoutV1Dto,
     ): WorkoutV1Dto {
         return this.service.updateWorkout(id, workout);
+    }
+
+    @Delete(":id")
+    @HttpCode(204)
+    @ApiOperation({ summary: "Delete workout by ID" })
+    @ApiResponse({ status: 204 })
+    @ApiBadRequestResponse({ type: ErrorResponseDto })
+    deleteWorkout(@Param("id") id: string): void {
+        this.service.deleteWorkout(id);
     }
 }
 

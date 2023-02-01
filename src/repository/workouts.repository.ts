@@ -43,6 +43,10 @@ class WorkoutsRepository {
 
         return workout;
     }
+
+    deleteById(id: string): void {
+        delete inMemoryWorkouts[id];
+    }
 }
 
 export { WorkoutsRepository };

@@ -58,6 +58,18 @@ class WorkoutsV1Service {
 
         return this.mapper.toWorkoutV1Dto(updatedWorkoutEntity);
     }
+
+    deleteWorkout(id: string): void {
+        this.logger.info(`Retrieving workout with id: ${id}`);
+        const workoutEntity = this.repository.findById(id);
+
+        if (!workoutEntity) {
+            this.logger.error(`No workout found with id: ${id}`);
+            throw new NoSuchWorkoutException();
+        }
+
+        this.repository.deleteById(id);
+    }
 }
 
 export { WorkoutsV1Service };
