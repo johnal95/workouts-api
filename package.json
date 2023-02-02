@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@nestjs/common": "9.3.1",
-    "@nestjs/core": "9.2.1",
+    "@nestjs/core": "9.3.1",
     "@nestjs/platform-express": "9.3.1",
     "@nestjs/swagger": "6.1.4",
     "express": "*",
@@ -42,7 +42,7 @@
   "devDependencies": {
     "@nestjs/cli": "9.1.9",
     "@nestjs/schematics": "9.0.4",
-    "@nestjs/testing": "9.2.1",
+    "@nestjs/testing": "9.3.1",
     "@types/express": "*",
     "@types/jest": "29.4.0",
     "@types/node": "18.11.18",
