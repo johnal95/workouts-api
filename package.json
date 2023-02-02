@@ -26,7 +26,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@nestjs/common": "9.2.1",
+    "@nestjs/common": "9.3.1",
     "@nestjs/core": "9.2.1",
     "@nestjs/platform-express": "9.2.1",
     "@nestjs/swagger": "6.1.4",
