@@ -1,8 +1,15 @@
 import { LogLevel } from "../logging/types/log-level";
 
+type NodeEnv = "development" | "production";
+
 class Config {
+    static readonly NODE_ENV: NodeEnv = this.getNodeEnv();
     static readonly PORT: number = this.getEnvironmentPort();
     static readonly LOG_LEVEL: LogLevel = this.getEnvironmentLogLevel();
+
+    private static getNodeEnv(): NodeEnv {
+        return process.env.NODE_ENV === "development" ? "development" : "production";
+    }
 
     private static getEnvironmentPort(): number {
         return Number(process.env.PORT) || 8080;

@@ -15,7 +15,7 @@ const bootstrap = async () => {
 
     app.useGlobalFilters(new UnhandledExceptionFilter(), new HttpExceptionFilter());
 
-    setupSwaggerModule(app);
+    if (Config.NODE_ENV === "development") setupSwaggerModule(app);
 
     await app.listen(Config.PORT);
 };
