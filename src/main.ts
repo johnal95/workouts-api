@@ -1,32 +1,24 @@
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
-import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 
 import { AppModule } from "./app.module";
 import { Config } from "./config/config";
 import { HttpExceptionFilter } from "./exceptions/http-exception-filter";
 import { UnhandledExceptionFilter } from "./exceptions/unhandled-exception-filter";
 import { Logger } from "./logging/logger";
+import { setupSwaggerModule } from "./swagger/setup-swagger-module";
 
 const logger = new Logger("Server");
 
-async function bootstrap() {
+const bootstrap = async () => {
     const app = await NestFactory.create(AppModule, new ExpressAdapter(), { logger: false });
 
     app.useGlobalFilters(new UnhandledExceptionFilter(), new HttpExceptionFilter());
 
-    const config = new DocumentBuilder()
-        .setTitle("Workouts API")
-        .setDescription("An API for managing workout programs")
-        .setVersion("1.0")
-        .build();
-
-    const document = SwaggerModule.createDocument(app, config);
-
-    SwaggerModule.setup("api/docs", app, document);
+    setupSwaggerModule(app);
 
     await app.listen(Config.PORT);
-}
+};
 
 bootstrap()
     .then(() => {
