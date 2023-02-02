@@ -3,11 +3,11 @@ import { LogLevel } from "../logging/types/log-level";
 type NodeEnv = "development" | "production";
 
 class Config {
-    static readonly NODE_ENV: NodeEnv = this.getNodeEnv();
+    static readonly NODE_ENV: NodeEnv = this.getNodeEnvironment();
     static readonly PORT: number = this.getEnvironmentPort();
     static readonly LOG_LEVEL: LogLevel = this.getEnvironmentLogLevel();
 
-    private static getNodeEnv(): NodeEnv {
+    private static getNodeEnvironment(): NodeEnv {
         return process.env.NODE_ENV === "development" ? "development" : "production";
     }
 
