@@ -9,6 +9,9 @@
     "type": "git",
     "url": "git+https://github.com/JohnAL95/workouts-api.git"
   },
+  "engines": {
+    "node": "18.13.0"
+  },
   "volta": {
     "node": "18.13.0",
     "npm": "8.19.3"
