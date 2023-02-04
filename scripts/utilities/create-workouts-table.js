@@ -14,7 +14,7 @@ const createWorkoutsTable = async (client) => {
     ],
     AttributeDefinitions: [
       {
-        AttributeType: "N", // Number Type
+        AttributeType: "S", // String Type
         AttributeName: "WorkoutID",
       },
     ],
