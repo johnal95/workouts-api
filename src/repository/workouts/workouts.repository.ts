@@ -2,6 +2,7 @@ import { ScanCommand } from "@aws-sdk/client-dynamodb";
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from "uuid";
 
+import { Config } from "../../config/config";
 import { Logger } from "../../logging/logger";
 import { ddbDocClient } from "../dynamodb/ddb-doc-client";
 import { WorkoutEntity } from "./types/workout.entity";
@@ -22,7 +23,7 @@ const inMemoryWorkouts: Record<string, WorkoutEntity> = {
 
 @Injectable()
 class WorkoutsRepository {
-    private static readonly TABLE_NAME = "workouts-table";
+    private static readonly TABLE_NAME = Config.DYNAMO_DB_WORKOUTS_TABLE_NAME;
 
     private readonly logger = new Logger(WorkoutsRepository.name);
 
