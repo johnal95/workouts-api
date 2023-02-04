@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { Logger } from "../../../logging/logger";
-import { WorkoutsRepository } from "../../../repository/workouts.repository";
+import { WorkoutsRepository } from "../../../repository/workouts/workouts.repository";
 import { NoSuchWorkoutException } from "../exceptions/no-such-workout-exception";
 import { CreateWorkoutV1Dto } from "../dto/create-workout-v1.dto";
 import { WorkoutV1Dto } from "../dto/workout-v1.dto";

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 
-import { WorkoutEntity } from "../../../repository/types/workout.entity";
+import { WorkoutEntity } from "../../../repository/workouts/types/workout.entity";
 import { WorkoutV1Dto } from "../dto/workout-v1.dto";
 
 @Injectable()

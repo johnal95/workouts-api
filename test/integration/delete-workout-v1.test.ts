@@ -3,7 +3,7 @@ import { TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
-import { WorkoutsRepository } from "../../src/repository/workouts.repository";
+import { WorkoutsRepository } from "../../src/repository/workouts/workouts.repository";
 import { setupTestContext } from "../utilities/setup-test-context";
 
 describe("DELETE /api/v1/workouts/:id", () => {
