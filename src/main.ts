@@ -11,7 +11,7 @@ import { setupSwaggerModule } from "./swagger/setup-swagger-module";
 const logger = new Logger("Server");
 
 const bootstrap = async () => {
-    const app = await NestFactory.create(AppModule, new ExpressAdapter(), { logger: false });
+    const app = await NestFactory.create(AppModule, new ExpressAdapter(), { logger });
 
     app.useGlobalFilters(new UnhandledExceptionFilter(), new HttpExceptionFilter());
 
