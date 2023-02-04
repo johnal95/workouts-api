@@ -13,9 +13,8 @@ const developmentSetup = async () => {
 
   if (DYNAMO_DB_CREATE_DROP === "true" && TableNames.includes(DYNAMO_DB_WORKOUTS_TABLE_NAME)) {
     await deleteWorkoutsTable(dynamoDBClient);
-  }
-
-  if (!TableNames.includes(DYNAMO_DB_WORKOUTS_TABLE_NAME)) {
+    await createWorkoutsTable(dynamoDBClient);
+  } else if (!TableNames.includes(DYNAMO_DB_WORKOUTS_TABLE_NAME)) {
     await createWorkoutsTable(dynamoDBClient);
   }
 };
