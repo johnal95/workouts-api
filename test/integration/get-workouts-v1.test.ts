@@ -1,23 +1,27 @@
 import { INestApplication } from "@nestjs/common";
-import { TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 
 import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
-import { WorkoutsRepository } from "../../src/repository/workouts/workouts.repository";
+import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { setupTestContext } from "../utilities/setup-test-context";
 
 describe("GET /api/v1/workouts", () => {
     let app: INestApplication;
-    let moduleFixture: TestingModule;
 
     beforeEach(async () => {
         const context = await setupTestContext();
         app = context.app;
-        moduleFixture = context.moduleFixture;
     });
 
     it("should get list of workouts", async () => {
+        jest.spyOn(ddbDocClient, "send").mockImplementationOnce(() => ({
+            Items: [
+                { WorkoutID: { S: "workout-1" }, WorkoutName: { S: "First workout" } },
+                { WorkoutID: { S: "workout-2" }, WorkoutName: { S: "Second workout" } },
+            ],
+        }));
+
         const response = await request(app.getHttpServer()).get("/api/v1/workouts");
 
         expect(response.status).toBe(200);
@@ -28,8 +32,7 @@ describe("GET /api/v1/workouts", () => {
     });
 
     it("should respond with relevant error when workouts fail to be retrieved", async () => {
-        const repository = moduleFixture.get<WorkoutsRepository>(WorkoutsRepository);
-        jest.spyOn(repository, "findAll").mockImplementation(() => {
+        jest.spyOn(ddbDocClient, "send").mockImplementationOnce(() => {
             throw new Error("findAll failed");
         });
 

@@ -17,9 +17,9 @@ class WorkoutsV1Service {
         private readonly repository: WorkoutsRepository,
     ) {}
 
-    getWorkouts(): WorkoutV1Dto[] {
-        this.logger.info("Retrieving all workouts");
-        const workoutEntities = this.repository.findAll();
+    async getWorkouts(): Promise<WorkoutV1Dto[]> {
+        this.logger.debug("Retrieving all workouts");
+        const workoutEntities = await this.repository.findAll();
 
         return this.mapper.toWorkoutV1DtoList(workoutEntities);
     }

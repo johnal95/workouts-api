@@ -36,7 +36,7 @@ class WorkoutsV1Controller {
     @Get()
     @ApiOperation({ summary: "Retrieve all workouts" })
     @ApiResponse({ status: HttpStatus.OK, type: [WorkoutV1Dto] })
-    getWorkouts(): WorkoutV1Dto[] {
+    getWorkouts(): Promise<WorkoutV1Dto[]> {
         return this.service.getWorkouts();
     }
 
