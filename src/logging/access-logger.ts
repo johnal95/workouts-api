@@ -4,7 +4,7 @@ import { Logger } from "./logger";
 
 @Injectable()
 class AccessLogger implements NestMiddleware {
-    private logger = new Logger(AccessLogger.name);
+    private readonly logger = new Logger(AccessLogger.name);
 
     use(req: Request, res: Response, next: NextFunction): void {
         const startTime = Date.now();

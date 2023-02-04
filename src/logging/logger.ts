@@ -9,7 +9,7 @@ import {
 import { Config } from "../config/config";
 
 class Logger implements LoggerService {
-    private delegate: WinstonLogger;
+    private readonly delegate: WinstonLogger;
 
     constructor(loggerName: string) {
         this.delegate = createWinstonLogger({
