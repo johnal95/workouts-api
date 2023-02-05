@@ -1,0 +1,59 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.13.0]
+    env:
+      CI: true
+      DYNAMO_DB_PORT: 8000
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Docker compose
+        run: |
+          docker compose up --wait
+
+      - name: Install, lint and test
+        run: |
+          npm ci
+          npm run lint
+          npm audit
+          npm run test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.13.0]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
+          npm ci --omit=dev --ignore-scripts
