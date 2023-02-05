@@ -72,5 +72,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Debug DynamoDB
+        run: node ./test-dynamodb.js
+
       - name: Test
         run: npm run test

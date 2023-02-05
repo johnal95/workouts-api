@@ -1,4 +1,5 @@
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
+require("dotenv/config");
+const { DynamoDBClient, ListTablesCommand } = require("@aws-sdk/client-dynamodb");
 
 (async () => {
   try {
