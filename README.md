@@ -1,6 +1,7 @@
 # Workouts API
 
 ![Build](https://github.com/JohnAL95/workouts-api/actions/workflows/build.yml/badge.svg)
+![Known Vulnerabilities](https://snyk.io/test/github/JohnAL95/workouts-api/badge.svg)
 
 ## Running API locally
 
