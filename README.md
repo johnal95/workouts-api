@@ -40,7 +40,13 @@ npm run dev
 
 ```bash
 npm run test
+```
+
+```bash
 npm run test:watch
+```
+
+```bash
 npm run test:coverage
 ```
 
