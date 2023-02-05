@@ -9,9 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.13.0]
     env:
       CI: true
       DYNAMO_DB_PORT: 8000
@@ -19,10 +16,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup NodeJS ${{ matrix.node-version }}
+      - name: Setup NodeJS 18.13.0
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18.13.0
           cache: "npm"
 
       - name: Docker compose
@@ -31,7 +28,7 @@ jobs:
 
       - name: Install, lint and test
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run lint
           npm audit
           npm run test
@@ -39,21 +36,18 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.13.0]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup NodeJS ${{ matrix.node-version }}
+      - name: Setup NodeJS 18.13.0
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18.13.0
           cache: "npm"
 
       - name: Install and build
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run build
           npm ci --omit=dev --ignore-scripts
