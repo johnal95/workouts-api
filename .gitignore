@@ -18,3 +18,7 @@ node_modules
 
 # Build / generate output
 dist
+
+# IDE specific directories
+.idea
+.vscode
