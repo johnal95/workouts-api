@@ -22,3 +22,6 @@ dist
 # IDE specific directories
 .idea
 .vscode
+
+# Docker
+docker/dynamodb
