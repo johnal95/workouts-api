@@ -4,6 +4,7 @@ import * as request from "supertest";
 import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
+import { aWorkoutsItem } from "../mocks/workouts-item-builder";
 import { setupTestContext } from "../utilities/setup-test-context";
 
 describe("GET /api/v1/workouts", () => {
@@ -17,8 +18,8 @@ describe("GET /api/v1/workouts", () => {
     it("should get list of workouts", async () => {
         jest.spyOn(ddbDocClient, "send").mockImplementationOnce(() => ({
             Items: [
-                { WorkoutID: { S: "workout-1" }, WorkoutName: { S: "First workout" } },
-                { WorkoutID: { S: "workout-2" }, WorkoutName: { S: "Second workout" } },
+                aWorkoutsItem().withWorkoutId("workout-1").withWorkoutName("1st workout").build(),
+                aWorkoutsItem().withWorkoutId("workout-2").withWorkoutName("2nd workout").build(),
             ],
         }));
 
@@ -26,8 +27,8 @@ describe("GET /api/v1/workouts", () => {
 
         expect(response.status).toBe(200);
         expect(response.body).toEqual<WorkoutV1Dto[]>([
-            { id: "workout-1", name: "First workout" },
-            { id: "workout-2", name: "Second workout" },
+            { id: "workout-1", name: "1st workout" },
+            { id: "workout-2", name: "2nd workout" },
         ]);
     });
 
