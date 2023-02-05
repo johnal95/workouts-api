@@ -1,6 +1,6 @@
 import { LogLevel } from "../logging/types/log-level";
 
-type NodeEnv = "development" | "production";
+type NodeEnv = "test" | "development" | "production";
 
 class Config {
     static readonly NODE_ENV: NodeEnv = this.getNodeEnvironment();
@@ -12,7 +12,9 @@ class Config {
     static readonly DYNAMO_DB_WORKOUTS_TABLE_NAME: string = this.getWorkoutsTableName();
 
     private static getNodeEnvironment(): NodeEnv {
-        return process.env.NODE_ENV === "development" ? "development" : "production";
+        return process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
+            ? process.env.NODE_ENV
+            : "production";
     }
 
     private static getEnvironmentPort(): number {
@@ -30,7 +32,9 @@ class Config {
     }
 
     private static getDynamoDbEndpoint(): string | undefined {
-        return process.env.DYNAMO_DB_ENDPOINT;
+        return process.env.DYNAMO_DB_PORT && this.getNodeEnvironment() !== "production"
+            ? `http://localhost:${process.env.DYNAMO_DB_PORT}`
+            : undefined;
     }
 
     private static getWorkoutsTableName(): string {

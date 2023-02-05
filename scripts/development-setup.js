@@ -4,10 +4,10 @@ const { DynamoDBClient, ListTablesCommand } = require("@aws-sdk/client-dynamodb"
 const { createWorkoutsTable } = require("./utilities/create-workouts-table");
 const { deleteWorkoutsTable } = require("./utilities/delete-workouts-table");
 
-const { DYNAMO_DB_ENDPOINT, DYNAMO_DB_CREATE_DROP, DYNAMO_DB_WORKOUTS_TABLE_NAME } = process.env;
+const { DYNAMO_DB_PORT, DYNAMO_DB_CREATE_DROP, DYNAMO_DB_WORKOUTS_TABLE_NAME } = process.env;
 
 const developmentSetup = async () => {
-  const dynamoDBClient = new DynamoDBClient({ endpoint: DYNAMO_DB_ENDPOINT });
+  const dynamoDBClient = new DynamoDBClient({ endpoint: `http://localhost:${DYNAMO_DB_PORT}` });
 
   const { TableNames } = await dynamoDBClient.send(new ListTablesCommand({}));
 
