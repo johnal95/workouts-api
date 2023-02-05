@@ -2,7 +2,7 @@
 
 ![Build](https://github.com/JohnAL95/workouts-api/actions/workflows/build.yml/badge.svg)
 
-## Running locally
+## Running API locally
 
 1. Create a `.env` file following the template in `.env.example`. Replacing any of the example values where appropriate. e.g.:
 
@@ -30,11 +30,11 @@ npm install
 npm run dev
 ```
 
-## Running tests
+## Running tests locally
 
 1. Complete the first 3 steps in the section above.
 
-2. Run either of the test scripts:
+2. Run either of the following test scripts:
 
 ```bash
 npm run test
