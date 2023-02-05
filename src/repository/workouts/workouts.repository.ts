@@ -1,4 +1,4 @@
-import { ScanCommand } from "@aws-sdk/client-dynamodb";
+import { ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from "uuid";
 
@@ -6,7 +6,6 @@ import { Config } from "../../config/config";
 import { Logger } from "../../logging/logger";
 import { ddbDocClient } from "../dynamodb/ddb-doc-client";
 import { WorkoutEntity } from "./types/workout.entity";
-import { WorkoutsMapper } from "./workouts.mapper";
 
 const inMemoryWorkouts: Record<string, WorkoutEntity> = {
     "workout-1": {
@@ -27,14 +26,11 @@ class WorkoutsRepository {
 
     private readonly logger = new Logger(WorkoutsRepository.name);
 
-    constructor(private readonly mapper: WorkoutsMapper) {}
-
     async findAll(): Promise<WorkoutEntity[]> {
         this.logger.info(`Retrieving all items from ${WorkoutsRepository.TABLE_NAME}`);
         const scanCommand = new ScanCommand({ TableName: WorkoutsRepository.TABLE_NAME });
         const { Items } = await ddbDocClient.send(scanCommand);
-        const entities = this.mapper.toEntities(Items ?? []);
-        return entities;
+        return Items as WorkoutEntity[];
     }
 
     findById(id: string): WorkoutEntity | null {

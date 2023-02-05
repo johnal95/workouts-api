@@ -9,13 +9,13 @@ const createWorkoutsTable = async (client) => {
     KeySchema: [
       {
         KeyType: "HASH", // Partition Key
-        AttributeName: "WorkoutID",
+        AttributeName: "id",
       },
     ],
     AttributeDefinitions: [
       {
         AttributeType: "S", // String Type
-        AttributeName: "WorkoutID",
+        AttributeName: "id",
       },
     ],
     ProvisionedThroughput: { ReadCapacityUnits: 5, WriteCapacityUnits: 5 },
