@@ -17,7 +17,6 @@ const config: JestConfigWithTsJest = {
     testEnvironment: "node",
     collectCoverageFrom: ["src/**/*.ts"],
     coverageDirectory: "coverage",
-    testTimeout: 10000,
 };
 
 export default config;
