@@ -7,7 +7,7 @@ import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../mocks/workout-entity-builder";
 import { createWorkoutsTable } from "../utilities/create-workouts-table";
 import { deleteWorkoutsTable } from "../utilities/delete-workouts-table";
-import { putWorkoutEntites } from "../utilities/put-workout-entities";
+import { putWorkoutEntities } from "../utilities/put-workout-entities";
 import { setupTestContext } from "../utilities/setup-test-context";
 
 describe("GET /api/v1/workouts", () => {
@@ -24,7 +24,7 @@ describe("GET /api/v1/workouts", () => {
     });
 
     it("should get list of workouts", async () => {
-        await putWorkoutEntites(
+        await putWorkoutEntities(
             aWorkoutEntity().withId("workout-1").withName("1st workout").build(),
             aWorkoutEntity().withId("workout-2").withName("2nd workout").build(),
         );

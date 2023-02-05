@@ -9,7 +9,7 @@ if (!DYNAMO_DB_WORKOUTS_TABLE_NAME) {
     throw new Error("Environment variable not found: 'DYNAMO_DB_WORKOUTS_TABLE_NAME'");
 }
 
-const putWorkoutEntites = async (...entities: WorkoutEntity[]): Promise<void> => {
+const putWorkoutEntities = async (...entities: WorkoutEntity[]): Promise<void> => {
     for (const entity of entities) {
         const putItemCommand = new PutItemCommand({
             TableName: DYNAMO_DB_WORKOUTS_TABLE_NAME,
@@ -23,4 +23,4 @@ const putWorkoutEntites = async (...entities: WorkoutEntity[]): Promise<void> =>
     }
 };
 
-export { putWorkoutEntites };
+export { putWorkoutEntities };
