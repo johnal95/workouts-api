@@ -5,23 +5,29 @@ import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../mocks/workout-entity-builder";
+import { createWorkoutsTable } from "../utilities/create-workouts-table";
+import { deleteWorkoutsTable } from "../utilities/delete-workouts-table";
+import { putWorkoutEntites } from "../utilities/put-workout-entities";
 import { setupTestContext } from "../utilities/setup-test-context";
 
 describe("GET /api/v1/workouts", () => {
     let app: INestApplication;
 
     beforeEach(async () => {
+        await createWorkoutsTable();
         const context = await setupTestContext();
         app = context.app;
     });
 
+    afterEach(async () => {
+        await deleteWorkoutsTable();
+    });
+
     it("should get list of workouts", async () => {
-        jest.spyOn(ddbDocClient, "send").mockImplementationOnce(() => ({
-            Items: [
-                aWorkoutEntity().withId("workout-1").withName("1st workout").build(),
-                aWorkoutEntity().withId("workout-2").withName("2nd workout").build(),
-            ],
-        }));
+        await putWorkoutEntites(
+            aWorkoutEntity().withId("workout-1").withName("1st workout").build(),
+            aWorkoutEntity().withId("workout-2").withName("2nd workout").build(),
+        );
 
         const response = await request(app.getHttpServer()).get("/api/v1/workouts");
 
