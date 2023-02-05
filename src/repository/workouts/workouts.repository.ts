@@ -31,9 +31,8 @@ class WorkoutsRepository {
 
     async findAll(): Promise<WorkoutEntity[]> {
         this.logger.info(`Retrieving all items from ${WorkoutsRepository.TABLE_NAME}`);
-        const { Items } = await ddbDocClient.send(
-            new ScanCommand({ TableName: WorkoutsRepository.TABLE_NAME }),
-        );
+        const scanCommand = new ScanCommand({ TableName: WorkoutsRepository.TABLE_NAME });
+        const { Items } = await ddbDocClient.send(scanCommand);
         const entities = this.mapper.toEntities(Items ?? []);
         return entities;
     }
