@@ -5,26 +5,21 @@ import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../mocks/workout-entity-builder";
-import { createWorkoutsTable } from "../utilities/create-workouts-table";
-import { deleteWorkoutsTable } from "../utilities/delete-workouts-table";
-import { putWorkoutEntities } from "../utilities/put-workout-entities";
 import { setupTestContext } from "../utilities/setup-test-context";
+import { setupWorkoutsTableContext } from "../utilities/setup-workouts-table-context";
 
 describe("GET /api/v1/workouts", () => {
     let app: INestApplication;
 
+    const workoutsTableContext = setupWorkoutsTableContext();
+
     beforeEach(async () => {
-        await createWorkoutsTable();
         const context = await setupTestContext();
         app = context.app;
     });
 
-    afterEach(async () => {
-        await deleteWorkoutsTable();
-    });
-
     it("should get list of workouts", async () => {
-        await putWorkoutEntities(
+        await workoutsTableContext.putEntities(
             aWorkoutEntity().withId("workout-1").withName("1st workout").build(),
             aWorkoutEntity().withId("workout-2").withName("2nd workout").build(),
         );
