@@ -2,7 +2,6 @@ import { ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from "uuid";
 
-import { Config } from "../../config/config";
 import { Logger } from "../../logging/logger";
 import { ddbDocClient } from "../dynamodb/ddb-doc-client";
 import { WorkoutEntity } from "./types/workout.entity";
@@ -22,13 +21,11 @@ const inMemoryWorkouts: Record<string, WorkoutEntity> = {
 
 @Injectable()
 class WorkoutsRepository {
-    private static readonly TABLE_NAME = Config.DYNAMO_DB_WORKOUTS_TABLE_NAME;
-
     private readonly logger = new Logger(WorkoutsRepository.name);
 
     async findAll(): Promise<WorkoutEntity[]> {
-        this.logger.info(`Retrieving all items from ${WorkoutsRepository.TABLE_NAME}`);
-        const scanCommand = new ScanCommand({ TableName: WorkoutsRepository.TABLE_NAME });
+        this.logger.info(`Retrieving all items from ${this.getTableName()}`);
+        const scanCommand = new ScanCommand({ TableName: this.getTableName() });
         const { Items } = await ddbDocClient.send(scanCommand);
         return Items as WorkoutEntity[];
     }
@@ -58,6 +55,9 @@ class WorkoutsRepository {
     deleteById(id: string): void {
         delete inMemoryWorkouts[id];
     }
+
+    private getTableName = (): string =>
+        process.env.DYNAMO_DB_WORKOUTS_TABLE_NAME ?? "workouts-table";
 }
 
 export { WorkoutsRepository };
