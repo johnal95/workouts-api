@@ -3,6 +3,7 @@
 ![Build](https://github.com/JohnAL95/workouts-api/actions/workflows/build.yml/badge.svg)
 ![Known Vulnerabilities](https://snyk.io/test/github/JohnAL95/workouts-api/badge.svg)
 ![GitHub Issues Open](https://img.shields.io/github/issues/JohnAL95/workouts-api.svg?maxAge=2592000)
+![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)
 
 ## Running API locally
 
