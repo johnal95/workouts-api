@@ -38,7 +38,7 @@
     "@aws-sdk/client-dynamodb": "3.264.0",
     "@aws-sdk/lib-dynamodb": "3.264.0",
     "@nestjs/common": "9.3.1",
-    "@nestjs/core": "9.3.1",
+    "@nestjs/core": "9.3.2",
     "@nestjs/platform-express": "9.3.2",
     "@nestjs/swagger": "6.1.4",
     "express": "*",
