@@ -25,11 +25,11 @@ class WorkoutsV1Service {
     }
 
     getWorkout(id: string): WorkoutV1Dto {
-        this.logger.info(`Retrieving workout with id: ${id}`);
+        this.logger.debug(`Retrieving workout with id: ${id}`);
         const workoutEntity = this.repository.findById(id);
 
         if (!workoutEntity) {
-            this.logger.error(`No workout found with id: ${id}`);
+            this.logger.warn(`No workout found with id: ${id}`);
             throw new NoSuchWorkoutException();
         }
 
@@ -37,18 +37,18 @@ class WorkoutsV1Service {
     }
 
     addNewWorkout(workout: CreateWorkoutV1Dto): WorkoutV1Dto {
-        this.logger.info("Saving workout");
+        this.logger.debug("Saving workout");
         const workoutEntity = this.repository.save(workout.name);
 
         return this.mapper.toWorkoutV1Dto(workoutEntity);
     }
 
     async updateWorkout(id: string, workout: UpdateWorkoutV1Dto): Promise<WorkoutV1Dto> {
-        this.logger.info(`Retrieving workout with id: ${id}`);
+        this.logger.debug(`Retrieving workout with id: ${id}`);
         const workoutEntity = this.repository.findById(id);
 
         if (!workoutEntity) {
-            this.logger.error(`No workout found with id: ${id}`);
+            this.logger.warn(`No workout found with id: ${id}`);
             throw new NoSuchWorkoutException();
         }
 
@@ -60,11 +60,11 @@ class WorkoutsV1Service {
     }
 
     async deleteWorkout(id: string): Promise<void> {
-        this.logger.info(`Retrieving workout with id: ${id}`);
+        this.logger.debug(`Retrieving workout with id: ${id}`);
         const workoutEntity = this.repository.findById(id);
 
         if (!workoutEntity) {
-            this.logger.error(`No workout found with id: ${id}`);
+            this.logger.warn(`No workout found with id: ${id}`);
             throw new NoSuchWorkoutException();
         }
 
