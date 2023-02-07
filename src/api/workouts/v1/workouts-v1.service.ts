@@ -59,7 +59,7 @@ class WorkoutsV1Service {
         return this.mapper.toWorkoutV1Dto(updatedWorkoutEntity);
     }
 
-    deleteWorkout(id: string): void {
+    async deleteWorkout(id: string): Promise<void> {
         this.logger.info(`Retrieving workout with id: ${id}`);
         const workoutEntity = this.repository.findById(id);
 
@@ -68,7 +68,7 @@ class WorkoutsV1Service {
             throw new NoSuchWorkoutException();
         }
 
-        this.repository.deleteById(id);
+        await this.repository.deleteById(id);
     }
 }
 

@@ -74,8 +74,8 @@ class WorkoutsV1Controller {
     @ApiOperation({ summary: "Delete workout by ID" })
     @ApiResponse({ status: HttpStatus.NO_CONTENT })
     @ApiBadRequestResponse({ type: ErrorResponseDto })
-    deleteWorkout(@Param("id") id: string): void {
-        this.service.deleteWorkout(id);
+    deleteWorkout(@Param("id") id: string): Promise<void> {
+        return this.service.deleteWorkout(id);
     }
 }
 

@@ -4,11 +4,16 @@ import * as request from "supertest";
 
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { WorkoutsRepository } from "../../src/repository/workouts/workouts.repository";
+import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
+import { aWorkoutEntity } from "../mocks/workout-entity-builder";
 import { setupTestContext } from "../utilities/setup-test-context";
+import { setupWorkoutsTableContext } from "../utilities/setup-workouts-table-context";
 
 describe("DELETE /api/v1/workouts/:id", () => {
     let app: INestApplication;
     let moduleFixture: TestingModule;
+
+    const workoutsTableContext = setupWorkoutsTableContext();
 
     beforeEach(async () => {
         const context = await setupTestContext();
@@ -17,17 +22,20 @@ describe("DELETE /api/v1/workouts/:id", () => {
     });
 
     it("should delete existing workout", async () => {
-        const repository = moduleFixture.get<WorkoutsRepository>(WorkoutsRepository);
-        const existingWorkoutId = "workout-2";
+        await workoutsTableContext.putEntities(aWorkoutEntity().withId("test-workout").build());
 
-        const response = await request(app.getHttpServer()).delete(
-            `/api/v1/workouts/${existingWorkoutId}`,
+        const repository = moduleFixture.get<WorkoutsRepository>(WorkoutsRepository);
+        jest.spyOn(repository, "findById").mockImplementationOnce(() =>
+            aWorkoutEntity().withId("test-workout").build(),
         );
 
-        expect(response.status).toBe(204);
+        const entitiesBeforeDeleting = await workoutsTableContext.getEntities();
+        const response = await request(app.getHttpServer()).delete(`/api/v1/workouts/test-workout`);
+        const entitiesAfterDeleting = await workoutsTableContext.getEntities();
 
-        const deletedWorkout = repository.findById(response.body.id);
-        expect(deletedWorkout).toBeNull();
+        expect(response.status).toBe(204);
+        expect(entitiesBeforeDeleting).toHaveLength(1);
+        expect(entitiesAfterDeleting).toHaveLength(0);
     });
 
     it("should respond with relevant error when workout does not exist", async () => {
@@ -45,8 +53,7 @@ describe("DELETE /api/v1/workouts/:id", () => {
     });
 
     it("should respond with relevant error when workout fails to be retrieved", async () => {
-        const repository = moduleFixture.get<WorkoutsRepository>(WorkoutsRepository);
-        jest.spyOn(repository, "deleteById").mockImplementation(() => {
+        jest.spyOn(ddbDocClient, "send").mockImplementationOnce(() => {
             throw new Error("deleteById failed");
         });
 

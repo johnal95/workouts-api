@@ -1,4 +1,4 @@
-import { ScanCommand } from "@aws-sdk/lib-dynamodb";
+import { DeleteCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from "uuid";
 
@@ -52,8 +52,10 @@ class WorkoutsRepository {
         return workout;
     }
 
-    deleteById(id: string): void {
-        delete inMemoryWorkouts[id];
+    async deleteById(id: string): Promise<void> {
+        this.logger.info(`Deleting item with id ${id} from ${this.getTableName()}`);
+        const deleteCommand = new DeleteCommand({ TableName: this.getTableName(), Key: { id } });
+        await ddbDocClient.send(deleteCommand);
     }
 
     private getTableName = (): string =>

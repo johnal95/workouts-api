@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 
 import { WorkoutEntity } from "../../src/repository/workouts/types/workout.entity";
 import { createDynamoDbTable } from "./create-dynamodb-table";
@@ -7,6 +7,12 @@ import { deleteDynamoDbTable } from "./delete-dynamodb-table";
 import { dynamoDBClient } from "./dynamodb-client";
 
 interface WorkoutsTableContext {
+    /**
+     * `workouts` table context utility for retrieving all entities from the table
+     * in the current context.
+     * @returns table entities.
+     */
+    getEntities: () => Promise<WorkoutEntity[]>;
     /**
      * `workouts` table context utility for adding entities to the table in
      * the current context.
@@ -34,6 +40,15 @@ const setupWorkoutsTableContext = (): WorkoutsTableContext => {
     });
 
     return {
+        getEntities: async () => {
+            const scanCommand = new ScanCommand({ TableName: tableName });
+            const { Items } = await dynamoDBClient.send(scanCommand);
+            return (Items ?? []).map((item) => ({
+                id: String(item.id?.S),
+                name: String(item.name?.S),
+                createdAt: Number(item.createdAt?.N),
+            }));
+        },
         putEntities: async (...entities: WorkoutEntity[]): Promise<void> => {
             for (const entity of entities) {
                 const putItemCommand = new PutItemCommand({
@@ -50,4 +65,4 @@ const setupWorkoutsTableContext = (): WorkoutsTableContext => {
     };
 };
 
-export { setupWorkoutsTableContext };
+export { WorkoutsTableContext, setupWorkoutsTableContext };
