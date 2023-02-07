@@ -54,6 +54,7 @@ class WorkoutsV1Service {
 
         const updatedWorkoutEntity = { ...workoutEntity, ...workout };
 
+        this.logger.debug(`Updating workout with id: ${id}`);
         await this.repository.update(updatedWorkoutEntity);
 
         return this.mapper.toWorkoutV1Dto(updatedWorkoutEntity);
@@ -68,6 +69,7 @@ class WorkoutsV1Service {
             throw new NoSuchWorkoutException();
         }
 
+        this.logger.debug(`Deleting workout with id: ${id}`);
         await this.repository.deleteById(id);
     }
 }
