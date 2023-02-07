@@ -43,7 +43,7 @@ class WorkoutsV1Service {
         return this.mapper.toWorkoutV1Dto(workoutEntity);
     }
 
-    updateWorkout(id: string, workout: UpdateWorkoutV1Dto): WorkoutV1Dto {
+    async updateWorkout(id: string, workout: UpdateWorkoutV1Dto): Promise<WorkoutV1Dto> {
         this.logger.info(`Retrieving workout with id: ${id}`);
         const workoutEntity = this.repository.findById(id);
 
@@ -54,7 +54,7 @@ class WorkoutsV1Service {
 
         const updatedWorkoutEntity = { ...workoutEntity, ...workout };
 
-        this.repository.update(updatedWorkoutEntity);
+        await this.repository.update(updatedWorkoutEntity);
 
         return this.mapper.toWorkoutV1Dto(updatedWorkoutEntity);
     }

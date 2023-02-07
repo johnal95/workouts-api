@@ -65,7 +65,7 @@ class WorkoutsV1Controller {
     updateWorkout(
         @Param("id") id: string,
         @Body(new SchemaValidationPipe(UpdateWorkoutV1Schema)) workout: UpdateWorkoutV1Dto,
-    ): WorkoutV1Dto {
+    ): Promise<WorkoutV1Dto> {
         return this.service.updateWorkout(id, workout);
     }
 
