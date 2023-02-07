@@ -40,7 +40,7 @@
     "@nestjs/common": "9.3.1",
     "@nestjs/core": "9.3.2",
     "@nestjs/platform-express": "9.3.2",
-    "@nestjs/swagger": "6.1.4",
+    "@nestjs/swagger": "6.2.1",
     "express": "*",
     "http-status-codes": "2.2.0",
     "joi": "17.7.0",
