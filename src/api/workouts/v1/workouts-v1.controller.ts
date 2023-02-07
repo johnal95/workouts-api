@@ -54,7 +54,7 @@ class WorkoutsV1Controller {
     @ApiBadRequestResponse({ type: ErrorResponseDto })
     addNewWorkout(
         @Body(new SchemaValidationPipe(CreateWorkoutV1Schema)) workout: CreateWorkoutV1Dto,
-    ): WorkoutV1Dto {
+    ): Promise<WorkoutV1Dto> {
         return this.service.addNewWorkout(workout);
     }
 

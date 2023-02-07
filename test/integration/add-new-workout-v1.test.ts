@@ -1,25 +1,25 @@
 import { INestApplication } from "@nestjs/common";
-import { TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 
+import { CreateWorkoutV1Dto } from "../../src/api/workouts/dto/create-workout-v1.dto";
 import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
-import { WorkoutsRepository } from "../../src/repository/workouts/workouts.repository";
+import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { setupTestContext } from "../utilities/setup-test-context";
+import { setupWorkoutsTableContext } from "../utilities/setup-workouts-table-context";
 
 describe("POST /api/v1/workouts", () => {
     let app: INestApplication;
-    let moduleFixture: TestingModule;
+
+    const workoutsTableContext = setupWorkoutsTableContext();
 
     beforeEach(async () => {
         const context = await setupTestContext();
         app = context.app;
-        moduleFixture = context.moduleFixture;
     });
 
-    it("add new workout", async () => {
-        const repository = moduleFixture.get<WorkoutsRepository>(WorkoutsRepository);
-        const workout = { name: "New workout" };
+    it("should add new workout", async () => {
+        const workout: CreateWorkoutV1Dto = { name: "New workout" };
 
         const response = await request(app.getHttpServer())
             .post("/api/v1/workouts")
@@ -32,8 +32,8 @@ describe("POST /api/v1/workouts", () => {
             name: "New workout",
         });
 
-        const createdWorkout = repository.findById(response.body.id);
-        expect(createdWorkout?.name).toBe(workout.name);
+        const [workoutEntity] = await workoutsTableContext.getEntities();
+        expect(workoutEntity?.name).toBe(workout.name);
     });
 
     it("should respond with relevant error when request body does not contain required field", async () => {
@@ -54,17 +54,14 @@ describe("POST /api/v1/workouts", () => {
     });
 
     it("should respond with relevant error when workout fails to be added", async () => {
-        const repository = moduleFixture.get<WorkoutsRepository>(WorkoutsRepository);
-        jest.spyOn(repository, "save").mockImplementation(() => {
+        jest.spyOn(ddbDocClient, "send").mockImplementationOnce(() => {
             throw new Error("save failed");
         });
-
-        const workout = { name: "New workout" };
 
         const response = await request(app.getHttpServer())
             .post("/api/v1/workouts")
             .set("Accept", "application/json")
-            .send(workout);
+            .send({ name: "New workout" });
 
         expect(response.status).toBe(500);
         expect(response.body).toEqual<ErrorResponseDto>({

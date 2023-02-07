@@ -36,9 +36,9 @@ class WorkoutsV1Service {
         return this.mapper.toWorkoutV1Dto(workoutEntity);
     }
 
-    addNewWorkout(workout: CreateWorkoutV1Dto): WorkoutV1Dto {
+    async addNewWorkout(workout: CreateWorkoutV1Dto): Promise<WorkoutV1Dto> {
         this.logger.debug("Saving workout");
-        const workoutEntity = this.repository.save(workout.name);
+        const workoutEntity = await this.repository.save(workout.name);
 
         return this.mapper.toWorkoutV1Dto(workoutEntity);
     }

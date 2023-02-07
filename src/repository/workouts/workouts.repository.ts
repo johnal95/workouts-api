@@ -1,4 +1,4 @@
-import { DeleteCommand, ScanCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { DeleteCommand, PutCommand, ScanCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from "uuid";
 
@@ -34,14 +34,14 @@ class WorkoutsRepository {
         return inMemoryWorkouts[id] ?? null;
     }
 
-    save(workoutName: string): WorkoutEntity {
+    async save(workoutName: string): Promise<WorkoutEntity> {
         const workout: WorkoutEntity = {
             id: uuidv4(),
             name: workoutName,
             createdAt: Date.now(),
         };
-
-        inMemoryWorkouts[workout.id] = workout;
+        const putCommand = new PutCommand({ TableName: this.getTableName(), Item: workout });
+        await ddbDocClient.send(putCommand);
 
         return workout;
     }
