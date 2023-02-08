@@ -15,6 +15,7 @@ const config: JestConfigWithTsJest = {
     testEnvironment: "node",
     collectCoverageFrom: ["src/**/*.ts"],
     coverageDirectory: "coverage",
+    maxWorkers: "50%",
 };
 
 export default config;
