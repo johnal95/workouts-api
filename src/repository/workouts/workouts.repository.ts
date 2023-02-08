@@ -40,6 +40,7 @@ class WorkoutsRepository {
             name: workoutName,
             createdAt: Date.now(),
         };
+        this.logger.info(`Saving item with id ${workout.id} in ${this.getTableName()}`);
         const putCommand = new PutCommand({ TableName: this.getTableName(), Item: workout });
         await ddbDocClient.send(putCommand);
 
