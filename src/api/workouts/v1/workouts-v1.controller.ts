@@ -44,7 +44,7 @@ class WorkoutsV1Controller {
     @ApiOperation({ summary: "Retrieve workout by ID" })
     @ApiResponse({ status: HttpStatus.OK, type: WorkoutV1Dto })
     @ApiNotFoundResponse({ type: ErrorResponseDto })
-    getWorkout(@Param("id") id: string): WorkoutV1Dto {
+    getWorkout(@Param("id") id: string): Promise<WorkoutV1Dto> {
         return this.service.getWorkout(id);
     }
 

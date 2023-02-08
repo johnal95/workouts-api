@@ -1,10 +1,8 @@
 import { INestApplication } from "@nestjs/common";
-import { TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 
 import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
-import { WorkoutsRepository } from "../../src/repository/workouts/workouts.repository";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../mocks/workout-entity-builder";
 import { setupTestContext } from "../utilities/setup-test-context";
@@ -12,24 +10,18 @@ import { setupWorkoutsTableContext } from "../utilities/setup-workouts-table-con
 
 describe("PUT /api/v1/workouts/:id", () => {
     let app: INestApplication;
-    let moduleFixture: TestingModule;
 
     const workoutsTableContext = setupWorkoutsTableContext();
 
     beforeEach(async () => {
         const context = await setupTestContext();
         app = context.app;
-        moduleFixture = context.moduleFixture;
     });
 
     it("should update existing workout", async () => {
-        const givenEntity = aWorkoutEntity()
-            .withId("test-workout")
-            .withName("name-before-updating")
-            .build();
-        const repository = moduleFixture.get<WorkoutsRepository>(WorkoutsRepository);
-        await workoutsTableContext.putEntities(givenEntity);
-        jest.spyOn(repository, "findById").mockImplementationOnce(() => givenEntity);
+        await workoutsTableContext.putEntities(
+            aWorkoutEntity().withId("test-workout").withName("name-before-updating").build(),
+        );
 
         const updatedWorkout = { name: "name-after-updating" };
 

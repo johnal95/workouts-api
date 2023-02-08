@@ -24,9 +24,9 @@ class WorkoutsV1Service {
         return this.mapper.toWorkoutV1DtoList(workoutEntities);
     }
 
-    getWorkout(id: string): WorkoutV1Dto {
+    async getWorkout(id: string): Promise<WorkoutV1Dto> {
         this.logger.debug(`Retrieving workout with id: ${id}`);
-        const workoutEntity = this.repository.findById(id);
+        const workoutEntity = await this.repository.findById(id);
 
         if (!workoutEntity) {
             this.logger.warn(`No workout found with id: ${id}`);
@@ -45,7 +45,7 @@ class WorkoutsV1Service {
 
     async updateWorkout(id: string, workout: UpdateWorkoutV1Dto): Promise<WorkoutV1Dto> {
         this.logger.debug(`Retrieving workout with id: ${id}`);
-        const workoutEntity = this.repository.findById(id);
+        const workoutEntity = await this.repository.findById(id);
 
         if (!workoutEntity) {
             this.logger.warn(`No workout found with id: ${id}`);
@@ -62,7 +62,7 @@ class WorkoutsV1Service {
 
     async deleteWorkout(id: string): Promise<void> {
         this.logger.debug(`Retrieving workout with id: ${id}`);
-        const workoutEntity = this.repository.findById(id);
+        const workoutEntity = await this.repository.findById(id);
 
         if (!workoutEntity) {
             this.logger.warn(`No workout found with id: ${id}`);

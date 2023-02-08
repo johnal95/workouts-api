@@ -1,9 +1,7 @@
 import { INestApplication } from "@nestjs/common";
-import { TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
-import { WorkoutsRepository } from "../../src/repository/workouts/workouts.repository";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../mocks/workout-entity-builder";
 import { setupTestContext } from "../utilities/setup-test-context";
@@ -11,23 +9,16 @@ import { setupWorkoutsTableContext } from "../utilities/setup-workouts-table-con
 
 describe("DELETE /api/v1/workouts/:id", () => {
     let app: INestApplication;
-    let moduleFixture: TestingModule;
 
     const workoutsTableContext = setupWorkoutsTableContext();
 
     beforeEach(async () => {
         const context = await setupTestContext();
         app = context.app;
-        moduleFixture = context.moduleFixture;
     });
 
     it("should delete existing workout", async () => {
         await workoutsTableContext.putEntities(aWorkoutEntity().withId("test-workout").build());
-
-        const repository = moduleFixture.get<WorkoutsRepository>(WorkoutsRepository);
-        jest.spyOn(repository, "findById").mockImplementationOnce(() =>
-            aWorkoutEntity().withId("test-workout").build(),
-        );
 
         const entitiesBeforeDeleting = await workoutsTableContext.getEntities();
         const response = await request(app.getHttpServer()).delete(`/api/v1/workouts/test-workout`);

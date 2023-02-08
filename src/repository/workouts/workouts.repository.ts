@@ -1,23 +1,16 @@
-import { DeleteCommand, PutCommand, ScanCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import {
+    DeleteCommand,
+    GetCommand,
+    PutCommand,
+    ScanCommand,
+    UpdateCommand,
+} from "@aws-sdk/lib-dynamodb";
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from "uuid";
 
 import { Logger } from "../../logging/logger";
 import { ddbDocClient } from "../dynamodb/ddb-doc-client";
 import { WorkoutEntity } from "./types/workout.entity";
-
-const inMemoryWorkouts: Record<string, WorkoutEntity> = {
-    "workout-1": {
-        id: "workout-1",
-        name: "First workout",
-        createdAt: Date.now(),
-    },
-    "workout-2": {
-        id: "workout-2",
-        name: "Second workout",
-        createdAt: Date.now(),
-    },
-};
 
 @Injectable()
 class WorkoutsRepository {
@@ -30,8 +23,11 @@ class WorkoutsRepository {
         return Items as WorkoutEntity[];
     }
 
-    findById(id: string): WorkoutEntity | null {
-        return inMemoryWorkouts[id] ?? null;
+    async findById(id: string): Promise<WorkoutEntity | null> {
+        this.logger.info(`Retrieving item with id ${id} from ${this.getTableName()}`);
+        const getCommand = new GetCommand({ TableName: this.getTableName(), Key: { id } });
+        const { Item } = await ddbDocClient.send(getCommand);
+        return Item ? (Item as WorkoutEntity) : null;
     }
 
     async save(workoutName: string): Promise<WorkoutEntity> {
