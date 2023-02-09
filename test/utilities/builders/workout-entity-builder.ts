@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-import { WorkoutEntity } from "../../src/repository/workouts/types/workout.entity";
+import { WorkoutEntity } from "../../../src/repository/workouts/types/workout.entity";
 
 class WorkoutEntityBuilder {
     private id = uuidv4();

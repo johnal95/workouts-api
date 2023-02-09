@@ -2,7 +2,7 @@ import * as request from "supertest";
 
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
-import { aWorkoutEntity } from "../mocks/workout-entity-builder";
+import { aWorkoutEntity } from "../utilities/builders/workout-entity-builder";
 import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
 
