@@ -1,22 +1,15 @@
-import { INestApplication } from "@nestjs/common";
 import * as request from "supertest";
 
 import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../mocks/workout-entity-builder";
-import { setupTestContext } from "../utilities/setup-test-context";
-import { setupWorkoutsTableContext } from "../utilities/setup-workouts-table-context";
+import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
+import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
 
 describe("GET /api/v1/workouts", () => {
-    let app: INestApplication;
-
-    const workoutsTableContext = setupWorkoutsTableContext();
-
-    beforeEach(async () => {
-        const context = await setupTestContext();
-        app = context.app;
-    });
+    const appTestContext = useAppTestContext();
+    const workoutsTableContext = useWorkoutsTableContext();
 
     it("should get list of workouts", async () => {
         await workoutsTableContext.putEntities(
@@ -24,7 +17,9 @@ describe("GET /api/v1/workouts", () => {
             aWorkoutEntity().withId("workout-2").withName("2nd workout").build(),
         );
 
-        const response = await request(app.getHttpServer()).get("/api/v1/workouts");
+        const response = await request(appTestContext.getApp().getHttpServer()).get(
+            "/api/v1/workouts",
+        );
 
         expect(response.status).toBe(200);
         expect(response.body).toEqual<WorkoutV1Dto[]>([
@@ -38,7 +33,9 @@ describe("GET /api/v1/workouts", () => {
             throw new Error("findAll failed");
         });
 
-        const response = await request(app.getHttpServer()).get("/api/v1/workouts");
+        const response = await request(appTestContext.getApp().getHttpServer()).get(
+            "/api/v1/workouts",
+        );
 
         expect(response.status).toBe(500);
         expect(response.body).toEqual<ErrorResponseDto>({

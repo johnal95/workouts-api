@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import { PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 
-import { WorkoutEntity } from "../../src/repository/workouts/types/workout.entity";
-import { createDynamoDbTable } from "./create-dynamodb-table";
-import { deleteDynamoDbTable } from "./delete-dynamodb-table";
-import { dynamoDBClient } from "./dynamodb-client";
+import { WorkoutEntity } from "../../../src/repository/workouts/types/workout.entity";
+import { createDynamoDbTable } from "../create-dynamodb-table";
+import { deleteDynamoDbTable } from "../delete-dynamodb-table";
+import { dynamoDBClient } from "../dynamodb-client";
 
 interface WorkoutsTableContext {
     /**
@@ -26,7 +26,7 @@ interface WorkoutsTableContext {
  * for the current Jest worker.
  * @returns `workouts` table context API.
  */
-const setupWorkoutsTableContext = (): WorkoutsTableContext => {
+const useWorkoutsTableContext = (): WorkoutsTableContext => {
     const tableName = `test-workouts-${uuidv4()}`;
 
     process.env.DYNAMO_DB_WORKOUTS_TABLE_NAME = tableName;
@@ -65,4 +65,4 @@ const setupWorkoutsTableContext = (): WorkoutsTableContext => {
     };
 };
 
-export { WorkoutsTableContext, setupWorkoutsTableContext };
+export { WorkoutsTableContext, useWorkoutsTableContext };

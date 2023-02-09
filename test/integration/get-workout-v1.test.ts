@@ -1,29 +1,24 @@
-import { INestApplication } from "@nestjs/common";
 import * as request from "supertest";
 
 import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../mocks/workout-entity-builder";
-import { setupTestContext } from "../utilities/setup-test-context";
-import { setupWorkoutsTableContext } from "../utilities/setup-workouts-table-context";
+import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
+import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
 
 describe("GET /api/v1/workouts/:id", () => {
-    let app: INestApplication;
-
-    const workoutsTableContext = setupWorkoutsTableContext();
-
-    beforeEach(async () => {
-        const context = await setupTestContext();
-        app = context.app;
-    });
+    const appTestContext = useAppTestContext();
+    const workoutsTableContext = useWorkoutsTableContext();
 
     it("should get existing workout", async () => {
         await workoutsTableContext.putEntities(
             aWorkoutEntity().withId("test-workout-1").withName("name-1").build(),
             aWorkoutEntity().withId("test-workout-2").withName("name-2").build(),
         );
-        const response = await request(app.getHttpServer()).get("/api/v1/workouts/test-workout-2");
+        const response = await request(appTestContext.getApp().getHttpServer()).get(
+            "/api/v1/workouts/test-workout-2",
+        );
 
         expect(response.status).toBe(200);
         expect(response.body).toEqual<WorkoutV1Dto>({
@@ -33,7 +28,7 @@ describe("GET /api/v1/workouts/:id", () => {
     });
 
     it("should respond with relevant error when workout does not exist", async () => {
-        const response = await request(app.getHttpServer()).get(
+        const response = await request(appTestContext.getApp().getHttpServer()).get(
             "/api/v1/workouts/non-existing-workout-id",
         );
 
@@ -51,7 +46,9 @@ describe("GET /api/v1/workouts/:id", () => {
             throw new Error("findById failed");
         });
 
-        const response = await request(app.getHttpServer()).get("/api/v1/workouts/workout-1");
+        const response = await request(appTestContext.getApp().getHttpServer()).get(
+            "/api/v1/workouts/workout-1",
+        );
 
         expect(response.status).toBe(500);
         expect(response.body).toEqual<ErrorResponseDto>({

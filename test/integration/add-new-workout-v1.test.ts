@@ -1,27 +1,20 @@
-import { INestApplication } from "@nestjs/common";
 import * as request from "supertest";
 
 import { CreateWorkoutV1Dto } from "../../src/api/workouts/dto/create-workout-v1.dto";
 import { WorkoutV1Dto } from "../../src/api/workouts/dto/workout-v1.dto";
 import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
-import { setupTestContext } from "../utilities/setup-test-context";
-import { setupWorkoutsTableContext } from "../utilities/setup-workouts-table-context";
+import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
+import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
 
 describe("POST /api/v1/workouts", () => {
-    let app: INestApplication;
-
-    const workoutsTableContext = setupWorkoutsTableContext();
-
-    beforeEach(async () => {
-        const context = await setupTestContext();
-        app = context.app;
-    });
+    const appTestContext = useAppTestContext();
+    const workoutsTableContext = useWorkoutsTableContext();
 
     it("should add new workout", async () => {
         const workout: CreateWorkoutV1Dto = { name: "New workout" };
 
-        const response = await request(app.getHttpServer())
+        const response = await request(appTestContext.getApp().getHttpServer())
             .post("/api/v1/workouts")
             .set("Accept", "application/json")
             .send(workout);
@@ -39,7 +32,7 @@ describe("POST /api/v1/workouts", () => {
     it("should respond with relevant error when request body does not contain required field", async () => {
         const invalidWorkout = {};
 
-        const response = await request(app.getHttpServer())
+        const response = await request(appTestContext.getApp().getHttpServer())
             .post("/api/v1/workouts")
             .set("Accept", "application/json")
             .send(invalidWorkout);
@@ -58,7 +51,7 @@ describe("POST /api/v1/workouts", () => {
             throw new Error("save failed");
         });
 
-        const response = await request(app.getHttpServer())
+        const response = await request(appTestContext.getApp().getHttpServer())
             .post("/api/v1/workouts")
             .set("Accept", "application/json")
             .send({ name: "New workout" });
