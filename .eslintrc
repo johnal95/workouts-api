@@ -21,6 +21,7 @@
         "@typescript-eslint/explicit-module-boundary-types": "error",
         "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/no-extraneous-class": "off",
+        "@typescript-eslint/no-non-null-assertion": "error",
         "import/exports-last": "error",
         "import/imports-first": "error",
         "import/no-cycle": "error",
