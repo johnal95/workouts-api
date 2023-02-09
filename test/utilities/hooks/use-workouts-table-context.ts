@@ -2,9 +2,9 @@ import { v4 as uuidv4 } from "uuid";
 import { PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 
 import { WorkoutEntity } from "../../../src/repository/workouts/types/workout.entity";
-import { createDynamoDbTable } from "../create-dynamodb-table";
-import { deleteDynamoDbTable } from "../delete-dynamodb-table";
-import { dynamoDBClient } from "../dynamodb-client";
+import { createDynamoDbTable } from "../dynamodb/create-dynamodb-table";
+import { deleteDynamoDbTable } from "../dynamodb/delete-dynamodb-table";
+import { dynamoDBClient } from "../dynamodb/dynamodb-client";
 
 interface WorkoutsTableContext {
     /**
