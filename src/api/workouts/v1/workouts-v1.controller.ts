@@ -10,9 +10,11 @@ import {
     Put,
 } from "@nestjs/common";
 import {
-    ApiOperation,
+    ApiCreatedResponse,
+    ApiNoContentResponse,
     ApiNotFoundResponse,
-    ApiResponse,
+    ApiOkResponse,
+    ApiOperation,
     ApiTags,
     ApiBadRequestResponse,
 } from "@nestjs/swagger";
@@ -26,7 +28,7 @@ import { CreateWorkoutV1Schema } from "../schema/create-workout-v1.schema";
 import { UpdateWorkoutV1Schema } from "../schema/update-workout-v1.schema";
 import { WorkoutsV1Service } from "./workouts-v1.service";
 
-@ApiTags("workouts v1")
+@ApiTags("Workouts Controller V1")
 @Controller({
     path: "api/v1/workouts",
 })
@@ -35,14 +37,14 @@ class WorkoutsV1Controller {
 
     @Get()
     @ApiOperation({ summary: "Retrieve all workouts" })
-    @ApiResponse({ status: HttpStatus.OK, type: [WorkoutV1Dto] })
+    @ApiOkResponse({ type: [WorkoutV1Dto] })
     getWorkouts(): Promise<WorkoutV1Dto[]> {
         return this.service.getWorkouts();
     }
 
     @Get(":id")
     @ApiOperation({ summary: "Retrieve workout by ID" })
-    @ApiResponse({ status: HttpStatus.OK, type: WorkoutV1Dto })
+    @ApiOkResponse({ type: WorkoutV1Dto })
     @ApiNotFoundResponse({ type: ErrorResponseDto })
     getWorkout(@Param("id") id: string): Promise<WorkoutV1Dto> {
         return this.service.getWorkout(id);
@@ -50,7 +52,7 @@ class WorkoutsV1Controller {
 
     @Post()
     @ApiOperation({ summary: "Add new workout" })
-    @ApiResponse({ status: HttpStatus.CREATED, type: WorkoutV1Dto })
+    @ApiCreatedResponse({ type: WorkoutV1Dto })
     @ApiBadRequestResponse({ type: ErrorResponseDto })
     addNewWorkout(
         @Body(new SchemaValidationPipe(CreateWorkoutV1Schema)) workout: CreateWorkoutV1Dto,
@@ -60,7 +62,7 @@ class WorkoutsV1Controller {
 
     @Put(":id")
     @ApiOperation({ summary: "Update workout by ID" })
-    @ApiResponse({ status: HttpStatus.OK, type: WorkoutV1Dto })
+    @ApiOkResponse({ type: WorkoutV1Dto })
     @ApiBadRequestResponse({ type: ErrorResponseDto })
     updateWorkout(
         @Param("id") id: string,
@@ -72,7 +74,7 @@ class WorkoutsV1Controller {
     @Delete(":id")
     @HttpCode(HttpStatus.NO_CONTENT)
     @ApiOperation({ summary: "Delete workout by ID" })
-    @ApiResponse({ status: HttpStatus.NO_CONTENT })
+    @ApiNoContentResponse()
     @ApiBadRequestResponse({ type: ErrorResponseDto })
     deleteWorkout(@Param("id") id: string): Promise<void> {
         return this.service.deleteWorkout(id);
