@@ -8,13 +8,14 @@ import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
 
 describe("POST /api/v1/workouts", () => {
-    const appTestContext = useAppTestContext();
+    const { getApp } = useAppTestContext();
+
     const workoutsTableContext = useWorkoutsTableContext();
 
     it("should add new workout", async () => {
         const workout: CreateWorkoutV1Dto = { name: "New workout" };
 
-        const response = await request(appTestContext.getApp().getHttpServer())
+        const response = await request(getApp().getHttpServer())
             .post("/api/v1/workouts")
             .set("Accept", "application/json")
             .send(workout);
@@ -32,7 +33,7 @@ describe("POST /api/v1/workouts", () => {
     it("should respond with relevant error when request body does not contain required field", async () => {
         const invalidWorkout = {};
 
-        const response = await request(appTestContext.getApp().getHttpServer())
+        const response = await request(getApp().getHttpServer())
             .post("/api/v1/workouts")
             .set("Accept", "application/json")
             .send(invalidWorkout);
@@ -51,7 +52,7 @@ describe("POST /api/v1/workouts", () => {
             throw new Error("save failed");
         });
 
-        const response = await request(appTestContext.getApp().getHttpServer())
+        const response = await request(getApp().getHttpServer())
             .post("/api/v1/workouts")
             .set("Accept", "application/json")
             .send({ name: "New workout" });

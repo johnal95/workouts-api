@@ -8,7 +8,8 @@ import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
 
 describe("GET /api/v1/workouts", () => {
-    const appTestContext = useAppTestContext();
+    const { getApp } = useAppTestContext();
+
     const workoutsTableContext = useWorkoutsTableContext();
 
     it("should get list of workouts", async () => {
@@ -17,9 +18,7 @@ describe("GET /api/v1/workouts", () => {
             aWorkoutEntity().withId("workout-2").withName("2nd workout").build(),
         );
 
-        const response = await request(appTestContext.getApp().getHttpServer()).get(
-            "/api/v1/workouts",
-        );
+        const response = await request(getApp().getHttpServer()).get("/api/v1/workouts");
 
         expect(response.status).toBe(200);
         expect(response.body).toEqual<WorkoutV1Dto[]>([
@@ -33,9 +32,7 @@ describe("GET /api/v1/workouts", () => {
             throw new Error("findAll failed");
         });
 
-        const response = await request(appTestContext.getApp().getHttpServer()).get(
-            "/api/v1/workouts",
-        );
+        const response = await request(getApp().getHttpServer()).get("/api/v1/workouts");
 
         expect(response.status).toBe(500);
         expect(response.body).toEqual<ErrorResponseDto>({

@@ -8,7 +8,8 @@ import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
 
 describe("PUT /api/v1/workouts/:id", () => {
-    const appTestContext = useAppTestContext();
+    const { getApp } = useAppTestContext();
+
     const workoutsTableContext = useWorkoutsTableContext();
 
     it("should update existing workout", async () => {
@@ -18,7 +19,7 @@ describe("PUT /api/v1/workouts/:id", () => {
 
         const updatedWorkout = { name: "name-after-updating" };
 
-        const response = await request(appTestContext.getApp().getHttpServer())
+        const response = await request(getApp().getHttpServer())
             .put("/api/v1/workouts/test-workout")
             .set("Accept", "application/json")
             .send(updatedWorkout);
@@ -35,7 +36,7 @@ describe("PUT /api/v1/workouts/:id", () => {
     });
 
     it("should respond with relevant error when workout does not exist", async () => {
-        const response = await request(appTestContext.getApp().getHttpServer())
+        const response = await request(getApp().getHttpServer())
             .put("/api/v1/workouts/non-existing-workout-id")
             .set("Accept", "application/json")
             .send({ name: "Update non existing workout" });
@@ -52,7 +53,7 @@ describe("PUT /api/v1/workouts/:id", () => {
     it("should respond with relevant error when request body does not contain required field", async () => {
         const invalidWorkout = {};
 
-        const response = await request(appTestContext.getApp().getHttpServer())
+        const response = await request(getApp().getHttpServer())
             .put("/api/v1/workouts/any-workout-id")
             .set("Accept", "application/json")
             .send(invalidWorkout);
@@ -71,7 +72,7 @@ describe("PUT /api/v1/workouts/:id", () => {
             throw new Error("update failed");
         });
 
-        const response = await request(appTestContext.getApp().getHttpServer())
+        const response = await request(getApp().getHttpServer())
             .put("/api/v1/workouts/workout-1")
             .set("Accept", "application/json")
             .send({ name: "Update non existing workout" });

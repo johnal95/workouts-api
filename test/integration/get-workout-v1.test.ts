@@ -8,7 +8,8 @@ import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
 
 describe("GET /api/v1/workouts/:id", () => {
-    const appTestContext = useAppTestContext();
+    const { getApp } = useAppTestContext();
+
     const workoutsTableContext = useWorkoutsTableContext();
 
     it("should get existing workout", async () => {
@@ -16,7 +17,7 @@ describe("GET /api/v1/workouts/:id", () => {
             aWorkoutEntity().withId("test-workout-1").withName("name-1").build(),
             aWorkoutEntity().withId("test-workout-2").withName("name-2").build(),
         );
-        const response = await request(appTestContext.getApp().getHttpServer()).get(
+        const response = await request(getApp().getHttpServer()).get(
             "/api/v1/workouts/test-workout-2",
         );
 
@@ -28,7 +29,7 @@ describe("GET /api/v1/workouts/:id", () => {
     });
 
     it("should respond with relevant error when workout does not exist", async () => {
-        const response = await request(appTestContext.getApp().getHttpServer()).get(
+        const response = await request(getApp().getHttpServer()).get(
             "/api/v1/workouts/non-existing-workout-id",
         );
 
@@ -46,9 +47,7 @@ describe("GET /api/v1/workouts/:id", () => {
             throw new Error("findById failed");
         });
 
-        const response = await request(appTestContext.getApp().getHttpServer()).get(
-            "/api/v1/workouts/workout-1",
-        );
+        const response = await request(getApp().getHttpServer()).get("/api/v1/workouts/workout-1");
 
         expect(response.status).toBe(500);
         expect(response.body).toEqual<ErrorResponseDto>({

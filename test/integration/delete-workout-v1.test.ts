@@ -7,14 +7,15 @@ import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
 
 describe("DELETE /api/v1/workouts/:id", () => {
-    const appTestContext = useAppTestContext();
+    const { getApp } = useAppTestContext();
+
     const workoutsTableContext = useWorkoutsTableContext();
 
     it("should delete existing workout", async () => {
         await workoutsTableContext.putEntities(aWorkoutEntity().withId("test-workout").build());
 
         const entitiesBeforeDeleting = await workoutsTableContext.getEntities();
-        const response = await request(appTestContext.getApp().getHttpServer()).delete(
+        const response = await request(getApp().getHttpServer()).delete(
             `/api/v1/workouts/test-workout`,
         );
         const entitiesAfterDeleting = await workoutsTableContext.getEntities();
@@ -25,7 +26,7 @@ describe("DELETE /api/v1/workouts/:id", () => {
     });
 
     it("should respond with relevant error when workout does not exist", async () => {
-        const response = await request(appTestContext.getApp().getHttpServer()).delete(
+        const response = await request(getApp().getHttpServer()).delete(
             "/api/v1/workouts/non-existing-workout-id",
         );
 
@@ -43,7 +44,7 @@ describe("DELETE /api/v1/workouts/:id", () => {
             throw new Error("deleteById failed");
         });
 
-        const response = await request(appTestContext.getApp().getHttpServer()).delete(
+        const response = await request(getApp().getHttpServer()).delete(
             "/api/v1/workouts/workout-1",
         );
 
