@@ -43,7 +43,7 @@
     "@nestjs/swagger": "6.2.1",
     "express": "*",
     "http-status-codes": "2.2.0",
-    "joi": "17.7.0",
+    "joi": "17.7.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "4.1.2",
     "rxjs": "7.8.0",
