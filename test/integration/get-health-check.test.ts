@@ -4,7 +4,7 @@ import { HealthCheckDto } from "../../src/health/dto/health-check.dto";
 import { HealthStatus } from "../../src/health/health-status";
 import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 
-describe("GET /health-check", () => {
+describe("GET /healthcheck", () => {
     const { getApp } = useAppTestContext();
 
     it("should return healthy status", async () => {
