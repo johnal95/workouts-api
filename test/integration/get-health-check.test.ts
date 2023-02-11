@@ -4,11 +4,11 @@ import { HealthCheckDto } from "../../src/health/dto/health-check.dto";
 import { HealthStatus } from "../../src/health/health-status";
 import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 
-describe("GET /healthcheck", () => {
+describe("GET /health-check", () => {
     const { getApp } = useAppTestContext();
 
     it("should return healthy status", async () => {
-        const response = await request(getApp().getHttpServer()).get("/healthcheck");
+        const response = await request(getApp().getHttpServer()).get("/health-check");
 
         expect(response.status).toBe(200);
         expect(response.body).toEqual<HealthCheckDto>({

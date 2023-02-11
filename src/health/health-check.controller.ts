@@ -5,7 +5,7 @@ import { HealthStatus } from "./health-status";
 
 @ApiTags("Health Check Controller")
 @Controller({
-    path: "healthcheck",
+    path: "health-check",
 })
 class HealthCheckController {
     private readonly startupTime = new Date().toISOString();
