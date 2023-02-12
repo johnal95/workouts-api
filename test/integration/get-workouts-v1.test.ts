@@ -6,6 +6,7 @@ import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../utilities/builders/workout-entity-builder";
 import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
+import { utcIsoTimestampRegex } from "../utilities/regex/utc-iso-timestamp-regex";
 
 describe("GET /api/v1/workouts", () => {
     const { getApp } = useAppTestContext();
@@ -39,7 +40,7 @@ describe("GET /api/v1/workouts", () => {
             statusCode: 500,
             error: "Internal Server Error",
             message: "An error [Error] occurred while handling the request: findAll failed",
-            timestamp: expect.any(String),
+            timestamp: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
 });

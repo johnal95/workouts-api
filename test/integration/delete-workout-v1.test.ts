@@ -5,6 +5,7 @@ import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../utilities/builders/workout-entity-builder";
 import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
+import { utcIsoTimestampRegex } from "../utilities/regex/utc-iso-timestamp-regex";
 
 describe("DELETE /api/v1/workouts/:id", () => {
     const { getApp } = useAppTestContext();
@@ -35,7 +36,7 @@ describe("DELETE /api/v1/workouts/:id", () => {
             statusCode: 404,
             error: "Not Found",
             message: "Workout not found",
-            timestamp: expect.any(String),
+            timestamp: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
 
@@ -53,7 +54,7 @@ describe("DELETE /api/v1/workouts/:id", () => {
             statusCode: 500,
             error: "Internal Server Error",
             message: "An error [Error] occurred while handling the request: deleteById failed",
-            timestamp: expect.any(String),
+            timestamp: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
 });

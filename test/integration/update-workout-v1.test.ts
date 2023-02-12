@@ -6,6 +6,7 @@ import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { aWorkoutEntity } from "../utilities/builders/workout-entity-builder";
 import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
+import { utcIsoTimestampRegex } from "../utilities/regex/utc-iso-timestamp-regex";
 
 describe("PUT /api/v1/workouts/:id", () => {
     const { getApp } = useAppTestContext();
@@ -46,7 +47,7 @@ describe("PUT /api/v1/workouts/:id", () => {
             statusCode: 404,
             error: "Not Found",
             message: "Workout not found",
-            timestamp: expect.any(String),
+            timestamp: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
 
@@ -63,7 +64,7 @@ describe("PUT /api/v1/workouts/:id", () => {
             statusCode: 400,
             error: "Bad Request",
             message: '"name" is required',
-            timestamp: expect.any(String),
+            timestamp: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
 
@@ -82,7 +83,7 @@ describe("PUT /api/v1/workouts/:id", () => {
             statusCode: 500,
             error: "Internal Server Error",
             message: "An error [Error] occurred while handling the request: update failed",
-            timestamp: expect.any(String),
+            timestamp: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
 });

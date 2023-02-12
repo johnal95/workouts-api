@@ -3,6 +3,7 @@ import * as request from "supertest";
 import { HealthCheckDto } from "../../src/health/dto/health-check.dto";
 import { HealthStatus } from "../../src/health/health-status";
 import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
+import { utcIsoTimestampRegex } from "../utilities/regex/utc-iso-timestamp-regex";
 
 describe("GET /health-check", () => {
     const { getApp } = useAppTestContext();
@@ -14,8 +15,8 @@ describe("GET /health-check", () => {
         expect(response.body).toEqual<HealthCheckDto>({
             application: "workouts-api",
             status: HealthStatus.HEALTHY,
-            startupTime: expect.any(String),
-            lastCheckTime: expect.any(String),
+            startupTime: expect.stringMatching(utcIsoTimestampRegex),
+            lastCheckTime: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
 });

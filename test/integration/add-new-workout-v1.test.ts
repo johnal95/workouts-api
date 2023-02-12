@@ -6,6 +6,7 @@ import { ErrorResponseDto } from "../../src/exceptions/error-response.dto";
 import { ddbDocClient } from "../../src/repository/dynamodb/ddb-doc-client";
 import { useAppTestContext } from "../utilities/hooks/use-app-test-context";
 import { useWorkoutsTableContext } from "../utilities/hooks/use-workouts-table-context";
+import { utcIsoTimestampRegex } from "../utilities/regex/utc-iso-timestamp-regex";
 
 describe("POST /api/v1/workouts", () => {
     const { getApp } = useAppTestContext();
@@ -43,7 +44,7 @@ describe("POST /api/v1/workouts", () => {
             statusCode: 400,
             error: "Bad Request",
             message: '"name" is required',
-            timestamp: expect.any(String),
+            timestamp: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
 
@@ -62,7 +63,7 @@ describe("POST /api/v1/workouts", () => {
             statusCode: 500,
             error: "Internal Server Error",
             message: "An error [Error] occurred while handling the request: save failed",
-            timestamp: expect.any(String),
+            timestamp: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
 });
