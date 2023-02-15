@@ -37,7 +37,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.271.0",
     "@aws-sdk/lib-dynamodb": "3.271.0",
-    "@nestjs/common": "9.3.8",
+    "@nestjs/common": "9.3.9",
     "@nestjs/core": "9.3.8",
     "@nestjs/platform-express": "9.3.8",
     "@nestjs/swagger": "6.2.1",
