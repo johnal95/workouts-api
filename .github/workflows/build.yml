@@ -40,14 +40,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup NodeJS 18.14.2
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.14.2
-          cache: "npm"
-
-      - name: Install and build
+      - name: Build Docker image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          npm ci --ignore-scripts
-          npm run build
-          npm ci --omit=dev --ignore-scripts
+          docker build -t "$GITHUB_REPOSITORY:$IMAGE_TAG" .
