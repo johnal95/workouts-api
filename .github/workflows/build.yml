@@ -7,6 +7,22 @@ on:
     branches: [master]
 
 jobs:
+  security:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup NodeJS 18.14.2
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.14.2
+          cache: "npm"
+      - name: Check for vulnerabilities with Snyk
+        run: npx --yes snyk test
+
   test:
     runs-on: ubuntu-latest
     env:
@@ -15,22 +31,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Setup NodeJS 18.14.2
         uses: actions/setup-node@v3
         with:
           node-version: 18.14.2
           cache: "npm"
-
       - name: Docker compose
         run: |
           docker compose up --wait
-
       - name: Install, lint and test
         run: |
           npm ci --ignore-scripts
           npm run lint
-          npm audit
           npm run test
 
   build:
@@ -39,7 +51,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Build Docker image
         env:
           IMAGE_TAG: ${{ github.sha }}
