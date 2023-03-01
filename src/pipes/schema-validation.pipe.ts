@@ -3,10 +3,10 @@ import { ValidateFunction } from "ajv";
 
 @Injectable()
 class SchemaValidationPipe implements PipeTransform {
-    constructor(private validate: ValidateFunction) {}
+    constructor(private validateSchema: ValidateFunction) {}
 
     transform(value: unknown): unknown {
-        const isValid = this.validate(value);
+        const isValid = this.validateSchema(value);
 
         if (!isValid) throw new BadRequestException(this.resolveErrorMessage());
 
@@ -14,7 +14,7 @@ class SchemaValidationPipe implements PipeTransform {
     }
 
     private resolveErrorMessage(): string | undefined {
-        const [error] = this.validate.errors ?? [];
+        const [error] = this.validateSchema.errors ?? [];
         return error ? error.message : undefined;
     }
 }
