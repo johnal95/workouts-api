@@ -1,16 +1,21 @@
 import { PipeTransform, Injectable, BadRequestException } from "@nestjs/common";
-import { ObjectSchema } from "joi";
+import { ValidateFunction } from "ajv";
 
 @Injectable()
 class SchemaValidationPipe implements PipeTransform {
-    constructor(private schema: ObjectSchema) {}
+    constructor(private validate: ValidateFunction) {}
 
     transform(value: unknown): unknown {
-        const { error } = this.schema.validate(value);
+        const isValid = this.validate(value);
 
-        if (error) throw new BadRequestException(error.message);
+        if (!isValid) throw new BadRequestException(this.resolveErrorMessage());
 
         return value;
+    }
+
+    private resolveErrorMessage(): string | undefined {
+        const [error] = this.validate.errors ?? [];
+        return error ? error.message : undefined;
     }
 }
 

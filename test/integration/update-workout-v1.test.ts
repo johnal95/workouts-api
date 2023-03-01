@@ -63,7 +63,7 @@ describe("PUT /api/v1/workouts/:id", () => {
         expect(response.body).toEqual<ErrorResponseDto>({
             statusCode: 400,
             error: "Bad Request",
-            message: '"name" is required',
+            message: "must have required property 'name'",
             timestamp: expect.stringMatching(utcIsoTimestampRegex),
         });
     });
