@@ -18,7 +18,7 @@ describe("POST /api/v1/workouts", () => {
 
         const response = await request(getApp().getHttpServer())
             .post("/api/v1/workouts")
-            .set("Accept", "application/json")
+            .set("Accept", "application/json; charset=utf-8")
             .send(workout);
 
         expect(response.status).toBe(201);
@@ -36,7 +36,7 @@ describe("POST /api/v1/workouts", () => {
 
         const response = await request(getApp().getHttpServer())
             .post("/api/v1/workouts")
-            .set("Accept", "application/json")
+            .set("Accept", "application/json; charset=utf-8")
             .send(invalidWorkout);
 
         expect(response.status).toBe(400);
@@ -55,7 +55,7 @@ describe("POST /api/v1/workouts", () => {
 
         const response = await request(getApp().getHttpServer())
             .post("/api/v1/workouts")
-            .set("Accept", "application/json")
+            .set("Accept", "application/json; charset=utf-8")
             .send({ name: "New workout" });
 
         expect(response.status).toBe(500);

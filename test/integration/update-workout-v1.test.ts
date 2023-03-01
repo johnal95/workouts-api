@@ -22,7 +22,7 @@ describe("PUT /api/v1/workouts/:id", () => {
 
         const response = await request(getApp().getHttpServer())
             .put("/api/v1/workouts/test-workout")
-            .set("Accept", "application/json")
+            .set("Accept", "application/json; charset=utf-8")
             .send(updatedWorkout);
 
         expect(response.status).toBe(200);
@@ -39,7 +39,7 @@ describe("PUT /api/v1/workouts/:id", () => {
     it("should respond with relevant error when workout does not exist", async () => {
         const response = await request(getApp().getHttpServer())
             .put("/api/v1/workouts/non-existing-workout-id")
-            .set("Accept", "application/json")
+            .set("Accept", "application/json; charset=utf-8")
             .send({ name: "Update non existing workout" });
 
         expect(response.status).toBe(404);
@@ -56,7 +56,7 @@ describe("PUT /api/v1/workouts/:id", () => {
 
         const response = await request(getApp().getHttpServer())
             .put("/api/v1/workouts/any-workout-id")
-            .set("Accept", "application/json")
+            .set("Accept", "application/json; charset=utf-8")
             .send(invalidWorkout);
 
         expect(response.status).toBe(400);
@@ -75,7 +75,7 @@ describe("PUT /api/v1/workouts/:id", () => {
 
         const response = await request(getApp().getHttpServer())
             .put("/api/v1/workouts/workout-1")
-            .set("Accept", "application/json")
+            .set("Accept", "application/json; charset=utf-8")
             .send({ name: "Update non existing workout" });
 
         expect(response.status).toBe(500);
