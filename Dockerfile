@@ -5,7 +5,7 @@ FROM node:18.14.2-alpine3.17 AS builder
 WORKDIR /home/node/app
 
 # Install dependencies
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm ci --ignore-scripts
 
 # Copy source code and build files
