@@ -7,11 +7,8 @@ on:
     branches: [master]
 
 jobs:
-  security:
+  lint:
     runs-on: ubuntu-latest
-    continue-on-error: true
-    env:
-      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,8 +17,10 @@ jobs:
         with:
           node-version: 18.14.2
           cache: "npm"
-      - name: Check for vulnerabilities with Snyk
-        run: npx --yes snyk test
+      - name: Lint
+        run: |
+          npm ci --ignore-scripts
+          npm run lint
 
   test:
     runs-on: ubuntu-latest
@@ -39,14 +38,14 @@ jobs:
       - name: Docker compose
         run: |
           docker compose up --wait
-      - name: Install, lint and test
+      - name: Test and audit
         run: |
           npm ci --ignore-scripts
-          npm run lint
+          npm audit
           npm run test
 
   build:
-    needs: test
+    needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
