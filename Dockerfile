@@ -23,7 +23,7 @@ FROM node:18.14.2-alpine3.17
 WORKDIR /home/node/app
 
 # Install production dependencies
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm ci --omit=dev --ignore-scripts
 
 # Copy build
