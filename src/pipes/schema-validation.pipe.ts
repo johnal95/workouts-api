@@ -15,7 +15,12 @@ class SchemaValidationPipe implements PipeTransform {
 
     private resolveErrorMessage(): string | undefined {
         const [error] = this.validateSchema.errors ?? [];
-        return error ? error.message : undefined;
+
+        if (!error) return undefined;
+
+        const { message, instancePath } = error;
+
+        return message && instancePath.length ? `${instancePath}: ${message}` : message;
     }
 }
 

@@ -68,6 +68,23 @@ describe("PUT /api/v1/workouts/:id", () => {
         });
     });
 
+    it("should respond with relevant error when request body contains invalid field type", async () => {
+        const invalidWorkout = { name: { invalid: "name" } };
+
+        const response = await request(getApp().getHttpServer())
+            .put("/api/v1/workouts/any-workout-id")
+            .set("Accept", "application/json; charset=utf-8")
+            .send(invalidWorkout);
+
+        expect(response.status).toBe(400);
+        expect(response.body).toEqual<ErrorResponseDto>({
+            statusCode: 400,
+            error: "Bad Request",
+            message: "/name: must be string",
+            timestamp: expect.stringMatching(utcIsoTimestampRegex),
+        });
+    });
+
     it("should respond with relevant error when workout fails to be updated", async () => {
         jest.spyOn(ddbDocClient, "send").mockImplementationOnce(() => {
             throw new Error("update failed");
