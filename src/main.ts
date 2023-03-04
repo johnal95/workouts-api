@@ -1,5 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter } from "@nestjs/platform-express";
+import * as cookieParser from "cookie-parser";
 
 import { AppModule } from "./app.module";
 import { Config } from "./config/config";
@@ -12,6 +13,8 @@ const logger = new Logger("Server");
 
 const bootstrap = async () => {
     const app = await NestFactory.create(AppModule, new ExpressAdapter(), { logger });
+
+    app.use(cookieParser());
 
     app.useGlobalFilters(new UnhandledExceptionFilter(), new HttpExceptionFilter());
 
