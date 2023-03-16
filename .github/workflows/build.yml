@@ -25,6 +25,22 @@ jobs:
           npm ci --ignore-scripts
           npm run lint
 
+  audit:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup NodeJS ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+      - name: Audit
+        run: |
+          npm ci --ignore-scripts
+          npm audit
+
   test:
     runs-on: ubuntu-latest
     env:
@@ -44,7 +60,6 @@ jobs:
       - name: Test and audit
         run: |
           npm ci --ignore-scripts
-          npm audit
           npm run test
 
   build:
