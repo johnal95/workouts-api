@@ -1,5 +1,5 @@
 # BUILDER IMAGE
-FROM node:18.14.2-alpine3.17 AS builder
+FROM node:18.15.0-bullseye AS builder
 
 # Create app working directory
 WORKDIR /home/node/app
@@ -17,7 +17,7 @@ RUN npm run build
 
 
 # PRODUCTION IMAGE
-FROM node:18.14.2-alpine3.17
+FROM node:18.15.0-bullseye
 
 # Create app working directory
 WORKDIR /home/node/app
