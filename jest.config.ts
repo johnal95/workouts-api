@@ -3,8 +3,8 @@ import { JestConfigWithTsJest } from "ts-jest";
 
 process.env.LOG_LEVEL = "silent";
 
-process.env.AWS_ACCESS_KEY_ID = "MOCK_AWS_ACCESS_KEY_ID";
-process.env.AWS_SECRET_ACCESS_KEY = "MOCK_AWS_SECRET_ACCESS_KEY";
+process.env.AWS_ACCESS_KEY_ID = "MOCKxAWSxACCESSxKEYxID";
+process.env.AWS_SECRET_ACCESS_KEY = "MOCKxAWSxSECRETxACCESSxKEY";
 process.env.AWS_REGION = "us-east-1";
 
 const config: JestConfigWithTsJest = {
