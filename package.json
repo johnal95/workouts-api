@@ -39,7 +39,7 @@
     "@aws-sdk/lib-dynamodb": "3.354.0",
     "@nestjs/common": "10.0.3",
     "@nestjs/core": "10.0.2",
-    "@nestjs/platform-express": "10.0.3",
+    "@nestjs/platform-express": "10.0.5",
     "@nestjs/swagger": "7.1.1",
     "ajv": "8.12.0",
     "cookie-parser": "1.4.6",
