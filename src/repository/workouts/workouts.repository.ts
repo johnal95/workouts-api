@@ -1,3 +1,4 @@
+import { randomUUID as uuidv4 } from "node:crypto";
 import {
     DeleteCommand,
     GetCommand,
@@ -6,7 +7,6 @@ import {
     UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
 import { Injectable } from "@nestjs/common";
-import { v4 as uuidv4 } from "uuid";
 
 import { Logger } from "../../logging/logger";
 import { ddbDocClient } from "../dynamodb/ddb-doc-client";

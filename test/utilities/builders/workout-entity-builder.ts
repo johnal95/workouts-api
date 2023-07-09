@@ -1,9 +1,9 @@
-import { v4 as uuidv4 } from "uuid";
+import { randomUUID as uuidv4 } from "node:crypto";
 
 import { WorkoutEntity } from "../../../src/repository/workouts/types/workout.entity";
 
 class WorkoutEntityBuilder {
-    private id = uuidv4();
+    private id: string = uuidv4();
 
     private name = "Default workout name";
 
