@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 env:
-  NODE_VERSION: 20.3.1
+  NODE_VERSION: 20.5.0
 
 jobs:
   audit:
