@@ -1,5 +1,5 @@
 # BUILDER IMAGE
-FROM node:20.5.0 AS builder
+FROM node:20.10 AS builder
 
 # Create app working directory
 WORKDIR /home/node/app
@@ -17,7 +17,7 @@ RUN npm run build
 
 
 # PRODUCTION IMAGE
-FROM node:20.5.0
+FROM node:20.10
 
 # Create app working directory
 WORKDIR /home/node/app
