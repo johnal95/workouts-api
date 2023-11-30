@@ -51,7 +51,7 @@
     "winston": "3.11.0"
   },
   "devDependencies": {
-    "@nestjs/cli": "10.1.15",
+    "@nestjs/cli": "10.2.1",
     "@nestjs/schematics": "10.0.2",
     "@nestjs/testing": "10.2.7",
     "@types/cookie-parser": "1.4.3",
