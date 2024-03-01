@@ -54,7 +54,7 @@
     "@nestjs/cli": "10.3.0",
     "@nestjs/schematics": "10.0.2",
     "@nestjs/testing": "10.2.7",
-    "@types/cookie-parser": "1.4.3",
+    "@types/cookie-parser": "1.4.7",
     "@types/express": "*",
     "@types/jest": "29.5.4",
     "@types/node": "20.8.5",
