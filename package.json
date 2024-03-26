@@ -43,7 +43,7 @@
     "@nestjs/swagger": "7.1.16",
     "ajv": "8.12.0",
     "cookie-parser": "1.4.6",
-    "express": "*",
+    "express": "4.19.2",
     "http-status-codes": "2.2.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "5.0.1",
