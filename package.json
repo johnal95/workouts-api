@@ -10,11 +10,11 @@
     "url": "git+https://github.com/JohnAL95/workouts-api.git"
   },
   "engines": {
-    "node": "20.15.1"
+    "node": "20.16.0"
   },
   "volta": {
-    "node": "20.15.1",
-    "npm": "10.7.0"
+    "node": "20.16.0",
+    "npm": "10.8.1"
   },
   "scripts": {
     "prepare": "husky",
